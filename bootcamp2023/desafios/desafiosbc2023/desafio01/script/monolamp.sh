@@ -8,6 +8,12 @@ echo "please run the script like this: monolamp <db_admin_password> <user_app_pa
 echo "do not forget you need to have admin creds to run this"
 echo "==================================================================================="
 
+#check if the current user belongs to the sudoers group
+if [ "$(id -n | grep -c sudo)" -eq 0 ]; then
+	echo "This script requires admin privileges for its execution"
+	exit 1
+fi
+
 #validate if two params were passed as expected
 if [ $# -ne 2]; then
 	echo "please type both db_admin and user_app passwords"
