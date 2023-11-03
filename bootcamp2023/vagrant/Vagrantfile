@@ -12,14 +12,15 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 3306, host: 1260 #mysql
   config.vm.hostname = "hashibionic"
   config.vm.synced_folder ".", "/puente", disabled: false
+  config.vm.disk :disk, size: "40GB", primary: true
   config.vm.provider "virtualbox" do |vb|
      vb.memory = "2048"
      vb.cpus = "2"
-     vb.name = "hashibionic"#nombre
+     vb.name = "hashibionic"
      
     # Configure a separate virtual disk
-    vb.customize ['createhd', '--filename', '/media/hftamayo/a6d1f8eb-760a-425c-aa80-3d539555f0e0/opt/devops/vms/hashibionic.vdi', '--size', '40960']
-    vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', '/media/hftamayo/a6d1f8eb-760a-425c-aa80-3d539555f0e0/opt/devops/vms/hashibionic.vdi']     
+    #vb.customize ['createhd', '--filename', '/media/hftamayo/a6d1f8eb-760a-425c-aa80-3d539555f0e0/opt/devops/vms/hashibionic.vdi', '--size', '40960']
+    #vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', '/media/hftamayo/a6d1f8eb-760a-425c-aa80-3d539555f0e0/opt/devops/vms/hashibionic.vdi']     
   end
 
   config.vm.provision "shell", inline: <<-SHELL
