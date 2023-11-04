@@ -33,3 +33,49 @@ fi
 
 echo "stage 1: please wait while installing the needed packages"
 
+function check_current_installation() {
+	package_installed=()
+	package_not_installed=()
+
+	if [ $(dpkg -l | grep -c php) -eq 1]; then
+		package_installed+=("php")
+	else
+		package_not_installed+=("php")
+	fi
+
+	if [ $(dpkg -l | grep -c mariadb-server) -eq 1]; then
+		package_installed+=("mariadb-server")
+	else
+		package_not_installed+=("mariadb-server")
+	fi
+
+	if [ $(dpkg -l | grep -c apache2) -eq 1]; then
+		package_installed+=("apache2")
+	else
+		package_not_installed+=("apache2")
+	fi
+
+	if [ $(dpkg -l | grep -c curl) -eq 1]; then
+		package_installed+=("curl")
+	else
+		package_not_installed+=("curl")
+	fi
+
+	echo "Installed packages:"
+	for package in "${package_installed[@]}"; do
+		echo "$package"
+	done
+
+	echo "The next packages will be installed:"
+	for package in "${package_not_installed[@]}"; do
+		echo "$package"
+	done
+
+	echo "installing...."
+
+	for package in "${package_not_installed[@}"; do
+		sudo apt install $package -y
+	done
+
+
+}
