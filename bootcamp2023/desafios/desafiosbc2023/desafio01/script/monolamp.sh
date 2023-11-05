@@ -33,7 +33,8 @@ fi
 
 echo "stage 1: please wait while installing the needed packages"
 
-function check_current_installation() {
+#stage 1: Infrastructure as Code
+function stage1() {
 	package_installed=()
 	package_not_installed=()
 
@@ -81,9 +82,54 @@ function check_current_installation() {
 
 	echo "installing...."
 
+	sudo apt update
+
 	for package in "${package_not_installed[@}"; do
 		sudo apt install $package -y
 	done
 
-
+	echo "Package installation done"
 }
+
+function health_check(){
+	packages_up=()
+	packages_down=()
+	php_status=$(systemctl status php7.4-fpm | grep "active (running)" | wc -l)
+	if [ $php_status -eq 1 ]; then
+		packages_up+=("php")
+	else
+		packages_down+=("php")
+	fi
+
+	mariadb_status=$(systemctl status mariadb | grep "active (running)" | wc -l)
+	if [ $mariadb_status -eq 1 ]; then
+		packages_up+=("mariadb")
+	else
+		packages_down+=("mariadb")
+	fi
+
+        apache_status=$(systemctl status apache2 | grep "active (running)" | wc -l)
+	if [ $apache_status -eq 1 ]; then
+		packages_up+=("apache")
+	else
+		packages_down+=("apache")
+	fi
+
+	git_status=$(dpkg -l | grep -c git)
+	if [ $git_status -eq 1 ]; then
+		packages_up+=("git")
+	else
+		packages_down+=("git")
+	fi
+
+	curl_status=$(dpkg -l | grep -c curl)
+	if [ $curl_status -eq 1 ]; then
+		packages_up+=("curl")
+	else
+		packages_down+=("curl")
+	fi
+}
+
+
+
+
