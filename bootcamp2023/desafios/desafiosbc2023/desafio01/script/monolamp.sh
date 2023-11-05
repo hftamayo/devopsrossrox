@@ -55,11 +55,19 @@ function check_current_installation() {
 		package_not_installed+=("apache2")
 	fi
 
+	if [ $(dpkg -l | grep -c git) -eq 1]; then
+		package_installed+=("git")
+	else
+		package_not_installed+=("git")
+	fi
+
 	if [ $(dpkg -l | grep -c curl) -eq 1]; then
 		package_installed+=("curl")
 	else
 		package_not_installed+=("curl")
 	fi
+
+
 
 	echo "Installed packages:"
 	for package in "${package_installed[@]}"; do
