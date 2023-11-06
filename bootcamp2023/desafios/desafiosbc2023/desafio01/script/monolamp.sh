@@ -1,40 +1,42 @@
 #!/bin/bash
 
 #stage 0: instructions
-echo "==================================================================================="
-echo "Monolith LAMP application deployment automation script"
-echo "This version is for Debian based distro"
-echo "please run the script like this: monolamp <db_admin_password> <user_app_password>"
-echo "do not forget you need to have admin creds to run this"
-echo "==================================================================================="
+function stage0(){
+	echo "==================================================================================="
+	echo "Monolith LAMP application deployment automation script"
+	echo "This version is for Debian based distro"
+	echo "please run the script like this: monolamp <db_admin_password> <user_app_password>"
+	echo "do not forget you need to have admin creds to run this"
+	echo "==================================================================================="
 
-#check if the current user belongs to the sudoers group
-if [ "$(id -n | grep -c sudo)" -eq 0 ]; then
-	echo "This script requires admin privileges for its execution"
-	exit 1
-fi
+	#check if the current user belongs to the sudoers group
+	if [ "$(id -n | grep -c sudo)" -eq 0 ]; then
+		echo "This script requires admin privileges for its execution"
+		exit 1
+	fi
 
-#validate if two params were passed as expected
-if [ $# -ne 2]; then
-	echo "please type both db_admin and user_app passwords"
-	exit 1
-fi
+	#validate if two params were passed as expected
+	if [ $# -ne 2]; then
+		echo "please type both db_admin and user_app passwords"
+		exit 1
+	fi
 
-db_admin=$1
-user_app=$2
+	db_admin=$1
+	user_app=$2
 
-echo "your creds are: dbadmin: $db_admin and user_app: $user_app. Press 1 to continue, any other key to abort"
-read continue
+	echo "your creds are: dbadmin: $db_admin and user_app: $user_app. Press 1 to continue, any other key to abort"
+	read continue
 
-if [ "$continue" != "1" ]; then
-	echo "process aborted correctly"
-	exit 1
-fi
-
-echo "stage 1: please wait while installing the needed packages"
+	if [ "$continue" != "1" ]; then
+		echo "process aborted correctly"
+		exit 1
+	fi
+}
 
 #stage 1: Infrastructure as Code
 function stage1() {
+	echo "stage 1: please wait while installing the needed packages"
+
 	package_installed=()
 	package_not_installed=()
 
@@ -68,8 +70,6 @@ function stage1() {
 		package_not_installed+=("curl")
 	fi
 
-
-
 	echo "Installed packages:"
 	for package in "${package_installed[@]}"; do
 		echo "$package"
@@ -84,7 +84,7 @@ function stage1() {
 
 	sudo apt update
 
-	for package in "${package_not_installed[@}"; do
+	for package in "${package_not_installed[@]}"; do
 		sudo apt install $package -y
 	done
 
@@ -128,7 +128,35 @@ function health_check(){
 	else
 		packages_down+=("curl")
 	fi
+
+	echo "Packages up and running:"
+	for package in "${packages_up[@]}"; do
+		echo $package
+	done
+
+	if [ ${#packages_down[@]} -gt 0 ]; then
+		echo "packages with error status:"
+		for package in "${packages_down[@]}"; do
+			echo $package
+		done
+		return 0
+	fi
+
+	echo "All packages are set and ready for the next stage"
+	return 1
 }
+
+main() {
+	stage0
+	stage1
+	hc_result=$(health_check)
+
+	if [ $hc_result -eq 0]; then
+		echo "the deploy of the infrastructure has failed, please notify to IT Support"
+		exit 1
+	fi
+	stage2
+
 
 
 
