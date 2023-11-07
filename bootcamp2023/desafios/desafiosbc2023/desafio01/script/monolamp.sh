@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #stage 0: instructions
-function stage0(){
+function stage0() {
 	echo "==================================================================================="
 	echo "Monolith LAMP application deployment automation script"
 	echo "This version is for Debian based distro"
@@ -82,16 +82,16 @@ function stage1() {
 
 	echo "installing...."
 
-	sudo apt update
+	apt update
 
 	for package in "${package_not_installed[@]}"; do
-		sudo apt install $package -y
+		apt install $package -y
 	done
 
 	echo "Package installation done"
 }
 
-function health_check(){
+function health_check() {
 	packages_up=()
 	packages_down=()
 	php_status=$(systemctl status php7.4-fpm | grep "active (running)" | wc -l)
@@ -144,6 +144,28 @@ function health_check(){
 
 	echo "All packages are set and ready for the next stage"
 	return 1
+}
+
+func stage2() {
+	echo "connecting to the source code repository..."
+	sourcecode="https://github.com/roxsross/bootcamp-devops-2023/tree/clase2-linux-bash/app-295devops-travel"
+	cd /var/www/html
+	if [ -d "travelwebapp" ]; then
+		cd travelwebapp
+		git pull origin master
+	else
+		git clone $sourcecode
+	fi
+	echo "configuring data layer..."
+	mysql -e "
+	CREATE DATABASE devopstravel;
+	CREATE USER 'codeuser'@'localhost' IDENTIFIED BY 'codepass';
+	GRANT ALL PRIVILEGES ON *.* TO 'codeuser'@'localhost';
+	FLUSH PRIVILEGES;"
+	mysql < database/devopstravel.sql 
+
+
+
 }
 
 main() {
