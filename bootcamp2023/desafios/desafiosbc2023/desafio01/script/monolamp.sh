@@ -206,15 +206,14 @@ function stage3() {
 
 function stage4() {
 	discord_key="https://discord.com/api/webhooks/1169002249939329156/7MOorDwzym-yBUs3gp0k5q7HyA42M5eYjfjpZgEwmAx1vVVcLgnlSh4TmtqZqCtbupov"
-	payload=$(cat <<EOF
-	{
+	payload='{
 		"Author": "Herbert Tamayo",
 		"Commit ID": "b77863f",
 		"Description": "Challenge 01 Web Application deploy using Bash Scripting",
 		"Github Repo": "https://github.com/hftamayo/devopsrossrox",
 		"Group" : "5",
 		"Status" : "Online"
-	}EOF)
+	}'
 
 	curl -X POST -H "Content-Type: application/json" -d "$payload" "$discord_key"
 }
