@@ -161,7 +161,7 @@ function stage2() {
 		cd travelwebapp
 		git pull origin master
 	else
-		git clone $sourcecode
+		git clone $sourcecode travelwebapp
 	fi
 	
 	echo "Configuring data layer..."
@@ -192,10 +192,31 @@ function stage2() {
 	fi
 }
 
-function stage3(){
+function stage3() {
 	echo "Deploying to production..."
+	systemctl reload apache2
+	app_status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/travelwebapp/index.php)
 
+	if [ $app_status -eq 200 ]; then
+		return 1
+	else
+		return 0
+	fi
+}
 
+function stage4() {
+	discord_key="https://discord.com/api/webhooks/1169002249939329156/7MOorDwzym-yBUs3gp0k5q7HyA42M5eYjfjpZgEwmAx1vVVcLgnlSh4TmtqZqCtbupov"
+	payload=$(cat <<EOF
+	{
+		"Author " : "Herbert Tamayo",
+		"Commit ID " : "12345",
+		"Description " : "Challenge 01 Web Application deploy using Bash Scripting",
+		"Group " : "#5",
+		"Status " : "Online"
+	}
+EOF)
+
+}
 main() {
 	stage0
 	stage1
@@ -213,6 +234,12 @@ main() {
 	fi
 
 	stage3_result=$(stage3)
+	if [ $stage3_result -eq 0]; then
+		echo "The application is not ready, please notify to IT Support"
+		exit 1
+	fi
+
+	stage4
 
 
 
