@@ -44,6 +44,12 @@ function stage1() {
 		package_installed+=("php")
 	else
 		package_not_installed+=("php")
+		package_not_installed+=("php-mysql")
+		package_not_installed+=("php-mbstring")
+		package_not_installed+=("php-zip")
+		package_not_installed+=("php-gd")
+		package_not_installed+=("php-json")
+		package_not_installed+=("php-curl")
 	fi
 
 	if [ $(dpkg -l | grep -c mariadb-server) -eq 1]; then
@@ -56,6 +62,7 @@ function stage1() {
 		package_installed+=("apache2")
 	else
 		package_not_installed+=("apache2")
+		package_not_installed+=("libapache2-mod-pdp")
 	fi
 
 	if [ $(dpkg -l | grep -c git) -eq 1]; then
@@ -146,8 +153,8 @@ function health_check() {
 	return 1
 }
 
-func stage2() {
-	echo "connecting to the source code repository..."
+function stage2() {
+	echo "Connecting to the source code repository..."
 	sourcecode="https://github.com/roxsross/bootcamp-devops-2023/tree/clase2-linux-bash/app-295devops-travel"
 	cd /var/www/html
 	if [ -d "travelwebapp" ]; then
@@ -156,17 +163,38 @@ func stage2() {
 	else
 		git clone $sourcecode
 	fi
-	echo "configuring data layer..."
+	
+	echo "Configuring data layer..."
 	mysql -e "
 	CREATE DATABASE devopstravel;
 	CREATE USER 'codeuser'@'localhost' IDENTIFIED BY 'codepass';
 	GRANT ALL PRIVILEGES ON *.* TO 'codeuser'@'localhost';
 	FLUSH PRIVILEGES;"
-	mysql < database/devopstravel.sql 
+	mysql < database/devopstravel.sql
 
+	echo "Updating Apache WebServer with full support of the Web Application..."
+	sed -i '/<IfModule mod_dir.c>/i \
+        DirectoryIndex index.php index.html index.cgi index.pl index.xhtml index.htm\n</IfModule>' /etc/apache2/mods-enabled/dir.conf
+	systemctl restart apache2
+	#it should be a call to health_check() to evaluate if Apache is running after this change
 
+	echo "Updating DB credentials in the WebApp config..."
+	sed -i 's/$dbPassword = "";\n/$dbPassword = "codepass";\n/g' config.php
+	#please check if after this mod config.php has root permissions
 
+	echo "Checking if the environment and the WebApp are ready..."
+	enviro_status=$(php info.php)
+
+	if [[ $enviro_status =~ "Loaded Configuration File" && $enviro_status=~ "PHP Version" ]]; then
+		return 1
+	else
+		return 0
+	fi
 }
+
+function stage3(){
+	echo "Deploying to production..."
+
 
 main() {
 	stage0
@@ -177,7 +205,15 @@ main() {
 		echo "the deploy of the infrastructure has failed, please notify to IT Support"
 		exit 1
 	fi
-	stage2
+	
+	stage2_result=$(stage2)
+	if [ $stage2_result -eq 0]; then
+		echo "The environment is not ready to run the application, please notify to IT Support"
+		exit 1
+	fi
+
+	stage3_result=$(stage3)
+
 
 
 
