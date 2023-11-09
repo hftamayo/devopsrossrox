@@ -10,7 +10,7 @@ function stage0() {
 	echo "==================================================================================="
 
 	#check if the current user belongs to the sudoers group
-	if [ "$(id -n | grep -c sudo)" -eq 0 ]; then
+	if [[ $EUID -eq 0 ]]; then
 		echo "This script requires admin privileges for its execution"
 		exit 1
 	fi
@@ -185,7 +185,7 @@ function stage2() {
 	echo "Checking if the environment and the WebApp are ready..."
 	enviro_status=$(php info.php)
 
-	if [[ $enviro_status =~ "Loaded Configuration File" && $enviro_status=~ "PHP Version" ]]; then
+	if [[ $enviro_status=~"Loaded Configuration File" && $enviro_status=~"PHP Version" ]]; then
 		return 1
 	else
 		return 0
@@ -219,25 +219,27 @@ function stage4() {
 }
 main() {
 	stage0
-	stage1
-	hc_result=$(health_check)
+	#stage1
+	#hc_result=$(health_check)
 
-	if [ $hc_result -eq 0]; then
-		echo "the deploy of the infrastructure has failed, please notify to IT Support"
-		exit 1
-	fi
+	#if [ $hc_result -eq 0]; then
+	#	echo "the deploy of the infrastructure has failed, please notify to IT Support"
+	#	exit 1
+	#fi
 	
-	stage2_result=$(stage2)
-	if [ $stage2_result -eq 0]; then
-		echo "The environment is not ready to run the application, please notify to IT Support"
-		exit 1
-	fi
+	#stage2_result=$(stage2)
+	#if [ $stage2_result -eq 0]; then
+	#	echo "The environment is not ready to run the application, please notify to IT Support"
+	#	exit 1
+	#fi
 
-	stage3_result=$(stage3)
-	if [ $stage3_result -eq 0]; then
-		echo "The application is not ready, please notify to IT Support"
-		exit 1
-	fi
+	#stage3_result=$(stage3)
+	#if [ $stage3_result -eq 0]; then
+	#	echo "The application is not ready, please notify to IT Support"
+	#	exit 1
+	#fi
 
-	stage4
+	#stage4
 }
+
+stage0
