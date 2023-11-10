@@ -78,8 +78,6 @@ function stage1() {
 		echo "All packages are installed"
 	fi
 
-	
-	sleep 1
 	if [ ${#package_not_installed[@]} -gt 0 ]; then
 		echo "updating system"
 		apt update
@@ -131,29 +129,25 @@ function health_check() {
 
 	echo "Packages up and running:"
 	for package in "${packages_up[@]}"; do
-		echo $package
-	done
+		echo "$package"
+	done	
+
 
 	if [ ${#packages_down[@]} -gt 0 ]; then
 		echo "packages with error status:"
 		for package in "${packages_down[@]}"; do
-			echo $package
+			echo "$package"
 		done
-		return 0
+		exit 1
 	fi
 
 	echo "All packages are set and ready for the next stage"
-	return 1
 }
 
 main() {
 	stage1
-	hc_result=$(health_check)
+	health_check
 
-	if [[ $hc_result -ne 0 ]]; then
-		echo "the deploy of the infrastructure has failed, please notify to IT Support"
-		exit 1
-	fi
 	sleep 1
 	echo "Installing code base..."
 	
