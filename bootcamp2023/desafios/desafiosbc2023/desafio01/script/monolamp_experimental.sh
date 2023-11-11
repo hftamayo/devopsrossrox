@@ -195,7 +195,7 @@ function stage2() {
 function stage3() {
 	echo "Deploying to production..."
 	systemctl reload apache2
-	app_status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/travelwebapp/index.php)
+	app_status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/desafio01/index.php)
 
 	if [ $app_status -eq 200 ]; then
 		return 1
