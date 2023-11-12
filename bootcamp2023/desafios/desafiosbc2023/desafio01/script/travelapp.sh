@@ -1,21 +1,31 @@
 #!/bin/bash
 
+
+BRED='\033[1;31m'       # Bold Red
+BGREEN='\033[1;32m'     # Bold Green
+BYELLOW='\033[1;33m'    # Bold Yellow
+UCYAN='\033[4;36m'      # Underline Cyan
+LGREY='\033[0;90m'      # Dark Gray
+TR='\033[0m'            # Text Reset
+
+#Global Variables
+WEB_URL="localhost"
+
 #stage 0: instructions
 function stage1() {
+    echo -e "${UCYAN}STAGE1${TR}"
 	echo "==================================================================================="
 	echo "Monolith LAMP application deployment automation script"
 	echo "This version is for Debian based distro"
-	echo "please run the script like this: monolamp <db_admin_password> <user_app_password>"
-	echo "do not forget you need to have admin creds to run this"
 	echo "==================================================================================="
 
 	#check if the current user is root or uses sudo command
 	if [ "$(id -nu)" != "root" ]; then
-		echo "Your account does not have enough administrative privileges"
+		echo -e "${BRED}Your account does not have enough administrative privileges${TR}"
 		exit 1
 	fi
 	
-	echo "Please wait while checking status of the needed packages"
+	echo -e "${BYELLOW}Please wait while checking status of the needed packages${TR}"
 	
 	package_installed=()
 	package_not_installed=()
@@ -32,7 +42,7 @@ function stage1() {
 		package_not_installed+=("php-curl")
 	fi
 		
-	if hash mysql 2>/dev/null; then
+	if hash mariadb 2>/dev/null; then
 		package_installed+=("mariadb-server")
 	else
 		package_not_installed+=("mariadb-server")
@@ -58,40 +68,38 @@ function stage1() {
 	fi		
 		
 	if [ ${#package_installed[@]} -gt 0 ]; then
-		echo "number of installed packages : "
-		echo ${#package_installed[@]}
+		echo -e "${BYELLOW}Number of installed packages : ${#package_installed[@]}${TR}"
 		for package in "${package_installed[@]}"; do
 			echo "$package"
 		done
 	else
-		echo "It requires a complete installation"
+		echo -e "${BGREEN}It requires a complete installation${TR}"
 	fi
 
 	if [ ${#package_not_installed[@]} -gt 0 ]; then
-		echo "number of packages not installed : "
-		echo ${#package_not_installed[@]}
-		echo "The next packages will be installed:"
+		echo -e "${BYELLOW}Number of packages not installed : ${#package_not_installed[@]}${TR}"
+		echo -e "${BYELLOW}The next packages will be installed: ${TR}"
 		for package in "${package_not_installed[@]}"; do
 			echo "$package"
 		done
 	else
-		echo "All packages are installed"
+		echo -e "${BGREEN}All packages are installed${TR}"
 	fi
 
 	if [ ${#package_not_installed[@]} -gt 0 ]; then
-		echo "updating system"
+		echo -e "${BYELLOW}Updating system${TR}"
 		apt update
 
-		echo "installing...."
 		for package in "${package_not_installed[@]}"; do
 			apt install $package -y
 		done
-		echo "Package installation done"
+		echo -e "${BGREEN}Package installation done${TR}"
 	fi
 	sleep 1
 }
 
 function health_check() {
+    echo -e "${UCYAN}HEALTH CHECK${TR}"
 	packages_up=()
 	packages_down=()
 	
@@ -127,29 +135,33 @@ function health_check() {
 		packages_down+=("curl")
 	fi
 
-	echo "Packages up and running:"
+	echo -e "${BGREEN}Packages up and running: ${TR}"
 	for package in "${packages_up[@]}"; do
 		echo "$package"
 	done	
 
 
 	if [ ${#packages_down[@]} -gt 0 ]; then
-		echo "packages with error status:"
+		echo -e "${BGREEN}packages with error status:${TR}"
 		for package in "${packages_down[@]}"; do
 			echo "$package"
 		done
 		exit 1
 	fi
 
-	echo "All packages are set and ready for the next stage"
+	echo -e "${BGREEN}All packages are set and ready for the next stage${TR}"
 }
 
 function stage2() {
-	
-	echo "Updating Apache WebServer with full support of the Web Application..."
+	echo -e "${UCYAN}STAGE2${TR}"
 	
 	datalayer_flag=0
-	
+    WEBAPPDB="devopstravel"
+	D_PROJECT="desafio01"
+    SOURCODE="https://github.com/roxsross/bootcamp-devops-2023.git"
+    APP_REPO="app-295devops-travel"
+    GIT_BRANCH="clase2-linux-bash"
+
 	#filepath: this is very important for redhat based distros
 	filepath="/etc/apache2/mods-enabled/dir.conf"
 	#I should check if the file exists
@@ -161,127 +173,113 @@ function stage2() {
 	dirfile=$(cat "$filepath")
 	
 	#adding index.php
-	newdirfile=$(sed -r 's/DirectoryIndexs+\s+(\S+)/DirectoryIndex\s+\1/g' <<< "$dirfile")
+	newdirfile=$(sed -r 's/DirectoryIndex index.html/DirectoryIndex index.php index.html/' <<< "$dirfile")
 	
 	#writing changes
 	echo "$newdirfile" > "$filepath"
-        
-        echo "Restarting web server..."
+        echo -e "${BYELLOW}Restarting web server...${TR}"
 	systemctl restart apache2
 	#it should be a call to health_check() to evaluate if Apache is running after this change
 	sleep 3
 	
 	echo "Checking if the database layer is already set up"
-	webappdb="devopstravel"
 	
-	mysql -u root -e "SHOW DATABASES LIKE '$webappdb';" | grep webappdb > /dev/null
+	mysql -u root -e "SHOW DATABASES LIKE '$WEBAPPDB';" | grep "$WEBAPPDB" > /dev/null
 
 	if [[ $? -eq 0 ]]; then
-		echo "The database '$webappdb' exists, the data layer is ready"
+		echo -e "${BGREEN}The database '$WEBAPPDB' exists, the data layer is ready${TR}"
 		datalayer_flag="1"
 	else
-		echo "Configuring data layer access..."
-		mysql -e "
-		CREATE DATABASE devopstravel;
-		CREATE USER 'codeuser'@'localhost' IDENTIFIED BY 'codepass';
-		GRANT ALL PRIVILEGES ON *.* TO 'codeuser'@'localhost';
-		FLUSH PRIVILEGES;"
+		echo -e "${BYELLOW}Configuring data layer access...${TR}"
+		mysql < ./script-config-db.sql
 	fi
 	
 	sleep 1
 
-	echo "Connecting to the codebase..."
-	sourcecode="https://github.com/roxsross/bootcamp-devops-2023.git"
-	cd
-	if [ -d "desafio01" ]; then
-		echo "application exists, searching for updates..."
+	echo -e "${BYELLOW}Connecting to the codebase...${TR}"
+
+	if [ -d $D_PROJECT ]; then
+		echo -e "${BGREEN}Application exists, searching for updates...${TR}"
 		sleep 1
-		cd desafio01
-		git pull origin master
+		cd $D_PROJECT
+		git pull origin $GIT_BRANCH
 	else
-		git clone $sourcecode desafio01
-		cd desafio01
+		echo -e "${BYELLOW}Clone repository...${TR}"
+		git clone $SOURCODE $D_PROJECT
+		cd $D_PROJECT
 	fi
 	
 	#moving to the source code
 
-	git checkout clase2-linux-bash
-	cd app-295devops-travel
+	git checkout $GIT_BRANCH
 
-	echo "Updating DB credentials in the WebApp config..."
-	sed -i 's/$dbPassword = "";\n/$dbPassword = "codepass";\n/g' config.php
+	echo -e "${BYELLOW}Updating DB credentials in the WebApp config...${TR}"
+	sed -i 's/$dbPassword = ""/$dbPassword = "codepass"/g' $APP_REPO/config.php
 	#please check if after this mod config.php has root permissions
 	
 	if [[ $datalayer_flag -eq 0 ]]; then
-		echo "Seeding data..."
-		mysql < database/devopstravel.sql
+		echo -e "${BYELLOW}Seeding data...${TR}"
+		mysql < $APP_REPO/database/devopstravel.sql
 	fi
 	sleep 3	
 	
-	echo "Installing webApp into the Web Server sandbox..."
-	cd ..
-	cp -r app-295devops-travel/ /var/www/html/desafio01
+	echo -e "${BYELLOW}Installing webApp into the Web Server sandbox...${TR}"
+	cp -r $APP_REPO/ /var/www/html/$D_PROJECT
 	sleep 2
 
-	echo "Checking if the environment and the WebApp are ready..."
-	cd /var/www/html/desafio01
-	enviro_status=$(php info.php)
+    cd ..
+
+	echo -e "${BYELLOW}Checking if the environment and the WebApp are ready...${TR}"
+	enviro_status=$(php /var/www/html/$D_PROJECT/info.php)
 
 	if [[ $enviro_status=~"Loaded Configuration File" && $enviro_status=~"PHP Version" ]]; then
-		echo "The code base is installed, up and running"
+		echo -e "${BGREEN}The code base is installed, up and running${TR}"
 	else
-		echo "The environment is not ready, please contact to IT support"
+		echo -e "${BYELLOW}The environment is not ready, please contact to IT support${TR}"
 		exit 1
 	fi
 }
 
 function stage3() {
+    echo -e "${UCYAN}STAGE3${TR}"
 	systemctl reload apache2
 	sleep 1
-	app_status=$(curl -s -o /dev/null -w "%{http_code}" http://localhost/desafio01/index.php)
+	app_status=$(curl -s -o /dev/null -w "%{http_code}" http://$WEB_URL/$D_PROJECT/index.php)
 
 	if [ $app_status -eq 200 ]; then
-		echo "The application is fully functional"
+		echo -e "${BGREEN}The application is fully functional${TR}"
+        return 1
 	else
-		echo "Unfortunately the application is not ready to enter into production. Please notify to production"
-		exit 1
+		echo -e "${BYELLOW}Unfortunately the application is not ready to enter into production. Please notify to production${TR}"
+		return 0
 	fi
 }
 
 function stage4() {
+    echo -e "${UCYAN}STAGE4${TR}"
 	discord_key="https://discord.com/api/webhooks/1169002249939329156/7MOorDwzym-yBUs3gp0k5q7HyA42M5eYjfjpZgEwmAx1vVVcLgnlSh4TmtqZqCtbupov"
-	#	payload='{
-	#		"content": "Challenge 01 Web Application deploy using Bash Scripting by hftamayo",
-	#		"Author": "Herbert Tamayo",
-	#		"Commit ID": "b77863f",
-	#		"Description": "Challenge 01 Web Application deploy using Bash Scripting",
-	#		"Github Repo": "https://github.com/hftamayo/devopsrossrox",
-	#		"Group" : "5",
-	#		"Status" : "Online"
-	#	}'	
-	
-	cd
-	cd desafio01
-	fullpayload=(
-	  "Challenge 01 Web Application deploy using Bash Scripting"
-	  "CodeBase Information:"
-	  "Github Repo: https://github.com/roxsross/bootcamp-devops-2023"
-	  "Author: Author $(git log -1 --pretty=format:'%an')"
-	  "Commit ID: $(git rev-parse --short HEAD)"
-	  "Commit Message: $(git log -1 --pretty=format:'%an')"
-	  "WebApp Status: Online"
-	  "Automation Script Information:"
-	  "Maintainer: Herbert Tamayo"
-	  "Github Repo: https://github.com/hftamayo/devopsrossrox"
-	  "Script details: Please refer to the README.md"
+    status_app=$1
 
-	)
-	
-	for payload in "${fullpayload[@]}"; do
-	  curl -X POST -H "Content-Type: application/json" -d '{
-	    "content": "'"$payload"'"
-	  }' "$discord_key"
-	done
+    REPO_NAME=$(basename $(git rev-parse --show-toplevel))
+    REPO_URL=$(git remote get-url origin)
+
+    DEPLOYMENT_INFO2="Despliegue del repositorio $REPO_NAME: "
+    COMMIT="Commit: $(git rev-parse --short HEAD)"
+    AUTHOR="Autor: $(git log -1 --pretty=format:'%an')"
+    DESCRIPTION="Descripción: $(git log -1 --pretty=format:'%s')"
+    MAINTAINER="Maintainer: GROUP_5"
+    if [ $status_app -eq 1 ]; then
+        DEPLOYMENT_INFO="Challenge 01 Web Application deploy using Bash Scripting \nPlease refer to the README.md"
+    else
+        DEPLOYMENT_INFO="La página web $WEB_URL no está en línea."
+    fi
+
+    MESSAGE="$DEPLOYMENT_INFO\n$DEPLOYMENT_INFO2\n$COMMIT\n$AUTHOR\n$DESCRIPTION\n$REPO_URL\n$MAINTAINER"
+    
+    curl -X POST -H "Content-Type: application/json" \
+     -d '{
+       "content": "'"${MESSAGE}"'"
+     }' "$discord_key"
 }
 
 
@@ -291,17 +289,20 @@ main() {
 
 	sleep 1
 	#it is important to check if the app is running before running the stage2	
-	echo "Installing code base..."
+	echo -e "${LGREY}Installing code base...${TR}"
 	stage2
 	
 	sleep 3
 
-	echo "Deploying to production..."
+	echo -e "${LGREY}Deploying to production...${TR}"
+
 	stage3
-	
+    stage3_result=$?
+
 	sleep 1
-	echo "Sending message to discord..."
-	stage4
+
+	echo -e "${LGREY}Sending message to discord...${TR}"
+	stage4 $stage3_result
 }
 
 main
