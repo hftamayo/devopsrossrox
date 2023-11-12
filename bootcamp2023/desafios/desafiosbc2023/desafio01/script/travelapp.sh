@@ -148,6 +148,8 @@ function stage2() {
 	
 	echo "Updating Apache WebServer with full support of the Web Application..."
 	
+	datalayer_flag=0
+	
 	#filepath: this is very important for redhat based distros
 	filepath="/etc/apache2/mods-enabled/dir.conf"
 	#I should check if the file exists
@@ -168,14 +170,25 @@ function stage2() {
 	systemctl restart apache2
 	#it should be a call to health_check() to evaluate if Apache is running after this change
 	sleep 3
-
-	echo "Configuring data layer access..."
-	mysql -e "
-	CREATE DATABASE devopstravel;
-	CREATE USER 'codeuser'@'localhost' IDENTIFIED BY 'codepass';
-	GRANT ALL PRIVILEGES ON *.* TO 'codeuser'@'localhost';
-	FLUSH PRIVILEGES;"
 	
+	echo "Checking if the database layer is already set up"
+	webappdb="devopstravel"
+	
+	mysql -u root -e "SHOW DATABASES LIKE '$webappdb';" | grep webappdb > /dev/null
+
+	if [[ $? -eq 0 ]]; then
+		echo "The database '$webappdb' exists, the data layer is ready"
+		datalayer_flag="1"
+	else
+		echo "Configuring data layer access..."
+		mysql -e "
+		CREATE DATABASE devopstravel;
+		CREATE USER 'codeuser'@'localhost' IDENTIFIED BY 'codepass';
+		GRANT ALL PRIVILEGES ON *.* TO 'codeuser'@'localhost';
+		FLUSH PRIVILEGES;"
+	fi
+	
+	sleep 1
 
 	echo "Connecting to the codebase..."
 	sourcecode="https://github.com/roxsross/bootcamp-devops-2023.git"
@@ -187,10 +200,11 @@ function stage2() {
 		git pull origin master
 	else
 		git clone $sourcecode desafio01
+		cd desafio01
 	fi
 	
 	#moving to the source code
-	cd desafio01
+
 	git checkout clase2-linux-bash
 	cd app-295devops-travel
 
@@ -198,8 +212,11 @@ function stage2() {
 	sed -i 's/$dbPassword = "";\n/$dbPassword = "codepass";\n/g' config.php
 	#please check if after this mod config.php has root permissions
 	
-	echo "Seeding data..."
-	mysql < database/devopstravel.sql
+	if [[ $datalayer_flag -eq 0 ]]; then
+		echo "Seeding data..."
+		mysql < database/devopstravel.sql
+	fi
+	sleep 3	
 	
 	echo "Installing webApp into the Web Server sandbox..."
 	cd ..
@@ -233,29 +250,40 @@ function stage3() {
 
 function stage4() {
 	discord_key="https://discord.com/api/webhooks/1169002249939329156/7MOorDwzym-yBUs3gp0k5q7HyA42M5eYjfjpZgEwmAx1vVVcLgnlSh4TmtqZqCtbupov"
-#	payload='{
-#		"content": "Challenge 01 Web Application deploy using Bash Scripting by hftamayo",
-#		"Author": "Herbert Tamayo",
-#		"Commit ID": "b77863f",
-#		"Description": "Challenge 01 Web Application deploy using Bash Scripting",
-#		"Github Repo": "https://github.com/hftamayo/devopsrossrox",
-#		"Group" : "5",
-#		"Status" : "Online"
-#	}'
+	#	payload='{
+	#		"content": "Challenge 01 Web Application deploy using Bash Scripting by hftamayo",
+	#		"Author": "Herbert Tamayo",
+	#		"Commit ID": "b77863f",
+	#		"Description": "Challenge 01 Web Application deploy using Bash Scripting",
+	#		"Github Repo": "https://github.com/hftamayo/devopsrossrox",
+	#		"Group" : "5",
+	#		"Status" : "Online"
+	#	}'	
+	
+	cd
+	cd desafio01
+	fullpayload=(
+	  "Challenge 01 Web Application deploy using Bash Scripting"
+	  "CodeBase Information:"
+	  "Github Repo: https://github.com/roxsross/bootcamp-devops-2023"
+	  "Author: Author $(git log -1 --pretty=format:'%an')"
+	  "Commit ID: $(git rev-parse --short HEAD)"
+	  "Commit Message: $(git log -1 --pretty=format:'%an')"
+	  "WebApp Status: Online"
+	  "Automation Script Information:"
+	  "Maintainer: Herbert Tamayo"
+	  "Github Repo: https://github.com/hftamayo/devopsrossrox"
+	  "Script details: Please refer to the README.md"
 
-	curl -X POST -H "Content-Type: application/json" -d '{
-	"content": "Challenge 01 Web Application deploy using Bash Scripting",
-	"Author": "Herbert Tamayo",
-	"Commit ID": "0dbcd48",
-	"Description": "Challenge 01 Web Application deploy using Bash Scripting",
-	"Github Repo": "https://github.com/hftamayo/devopsrossrox",
-	"Script Path": "https://github.com/hftamayo/devopsrossrox/blob/main/bootcamp2023/desafios/desafiosbc2023/desafio01/script/travelapp.sh"
-	"Group" : "5",
-	"Status" : "Online"
-	}' "$discord_key"
-
-	curl -X POST -H "Content-Type: application/json" -d "$payload" "$discord_key"
+	)
+	
+	for payload in "${fullpayload[@]}"; do
+	  curl -X POST -H "Content-Type: application/json" -d '{
+	    "content": "'"$payload"'"
+	  }' "$discord_key"
+	done
 }
+
 
 main() {
 	stage1
