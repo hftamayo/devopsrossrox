@@ -14,10 +14,10 @@ This is the repository of the 4th edition of DevOps Bootcamp by Rossana Suarez
 
 
 ### Bugs ###
-* Checking if the data layer exists
-* Not seeding if the data layer is already set up
+* Not seeding if the data layer is already set up -> solved by [William Yataco](https://github.com/hftamayo/devopsrossrox/pull/1)
+* Checking if the data layer exists -> solved by [William Yataco](https://github.com/hftamayo/devopsrossrox/pull/1)
 * Possible security bugs since the script requires admin privileges
-* Using colors for messages to the user
+* Using colors for messages to the user -> solved by [William Yataco](https://github.com/hftamayo/devopsrossrox/pull/1)
 
 ### Script Details ###
 ![source_code](https://github.com/hftamayo/devopsrossrox/blob/main/bootcamp2023/desafios/desafiosbc2023/desafio01/script/travelapp.sh)
@@ -25,3 +25,7 @@ This is the repository of the 4th edition of DevOps Bootcamp by Rossana Suarez
 
 ### Proof of Concept ###
 [Proof of Concept](https://youtu.be/bg_oXN9kMOA)
+
+### Changes after PR0001 by William Yataco ###
+![PR001](./snapshots/challenge01_pr01.png)
+
