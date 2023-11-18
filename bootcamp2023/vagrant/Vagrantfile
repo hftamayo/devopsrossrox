@@ -11,7 +11,7 @@ Vagrant.configure("2") do |config|
   config.vm.network "forwarded_port", guest: 8000, host: 1256 #alternative port
   config.vm.network "forwarded_port", guest: 3306, host: 1260 #mysql
   config.vm.hostname = "hashibionic"
-  config.vm.synced_folder ".", "/puente", disabled: false
+  config.vm.synced_folder "../../.", "/puente", disabled: false
   config.vm.disk :disk, size: "40GB", primary: true
   config.vm.provider "virtualbox" do |vb|
      vb.memory = "2048"
