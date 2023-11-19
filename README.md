@@ -11,7 +11,7 @@ This is the repository of the 4th edition of DevOps Bootcamp by Rossana Suarez
 ## 1. Challenge 01 ##
 
 ### 1.1 Requirements ###
-
+[requirments](https://github.com/hftamayo/devopsrossrox/blob/main/bootcamp2023/desafios/desafio01/enunciado.md)
 
 ### 1.2 Bugs ###
 * Not seeding if the data layer is already set up -> solved by [William Yataco](https://github.com/hftamayo/devopsrossrox/pull/1)
@@ -21,7 +21,6 @@ This is the repository of the 4th edition of DevOps Bootcamp by Rossana Suarez
 
 ### 1.3 Script Details ###
 [source_code](https://github.com/hftamayo/devopsrossrox/blob/main/bootcamp2023/desafios/desafio01/entregable/travelapp.sh)
-
 
 ### 1.4 Proof of Concept ###
 [Proof of Concept](https://youtu.be/bg_oXN9kMOA)
