@@ -20,7 +20,7 @@ This is the repository of the 4th edition of DevOps Bootcamp by Rossana Suarez
 * Using colors for messages to the user -> solved by [William Yataco](https://github.com/hftamayo/devopsrossrox/pull/1)
 
 ### 1.3 Script Details ###
-![source_code](https://github.com/hftamayo/devopsrossrox/blob/main/bootcamp2023/desafios/desafio01/entregable/travelapp.sh)
+[source_code](https://github.com/hftamayo/devopsrossrox/blob/main/bootcamp2023/desafios/desafio01/entregable/travelapp.sh)
 
 
 ### 1.4 Proof of Concept ###
