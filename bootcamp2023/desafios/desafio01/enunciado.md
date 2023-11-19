@@ -1,27 +1,27 @@
-![[./images/Pasted image 20231031114905.png]]
+![[images/Pasted image 20231031114905.png]]
 
-![[./images/Pasted image 20231031114923.png]]
+![[images/Pasted image 20231031114923.png]]
 
-![[./images/Pasted image 20231031114952.png]]
+![[images/Pasted image 20231031114952.png]]
 
-![[./images/Pasted image 20231031115015.png]]
+![[images/Pasted image 20231031115015.png]]
 
-![[./images/Pasted image 20231031115023.png]]
+![[images/Pasted image 20231031115023.png]]
 
-![[./images/Pasted image 20231031115049.png]]
+![[images/Pasted image 20231031115049.png]]
 
-![[./images/Pasted image 20231031115410.png]]
+![[images/Pasted image 20231031115410.png]]
 
-![[./images/Pasted image 20231031115433.png]]
+![[images/Pasted image 20231031115433.png]]
 
 
 imagn del frontend:
 
-![[./images/Pasted image 20231031115456.png]]
+![[images/Pasted image 20231031115456.png]]
 
 imagen de la base de datos:
 
-![[./images/Pasted image 20231031115509.png]]
+![[images/Pasted image 20231031115509.png]]
 
 Stages para desarrollar el script:
 
