@@ -1,0 +1,42 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: mongodb
+    restart: on-failure
+    build:
+      context: ./
+      dockerfile: DBDockerfile
+    volumes:
+      - mongodb-data:/data/db
+    healthcheck:
+      test: ["CMD", "mongo", "admin", "--eval", "db.serverStatus()"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - 295fullstack
+
+  mongo-express:
+    container_name: mongoadmin
+    depends_on:
+      db:
+        condition: service_healthy
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    env_file:
+      - ./.envmongoadmin
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=$MONGOADMIN_ROOT
+      - ME_CONFIG_MONGODB_PORT=$MONGOADMIN_PORT
+      - ME_CONFIG_MONGODB_URL= mongodb://mongodb:27017/
+    networks:
+      - 295fullstack
+
+
+volumes:
+  mongodb-data:
+
+networks:
+  295fullstack:

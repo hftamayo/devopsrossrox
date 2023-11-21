@@ -1,3 +1,4 @@
 bootcamp2023/desafios/desafiosbc2023/desafio01/script/token_discord
 bootcamp2023/vagrant/.vagrant/
 bootcamp2023/obsidiandevops/.obsidian/
+*.env*
