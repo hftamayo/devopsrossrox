@@ -28,3 +28,7 @@ This is the repository of the 4th edition of DevOps Bootcamp by Rossana Suarez
 ### 1.5 Changes after PR0001 by William Yataco ###
 ![PR001](./snapshots/challenge01_pr01.png)
 
+## 2 Challenge 02 ##
+
+### References ###
+* [MongoDB-Express Admin Tool Official Repo](https://github.com/mongo-express/mongo-express)
