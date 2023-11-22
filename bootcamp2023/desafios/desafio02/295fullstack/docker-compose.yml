@@ -34,6 +34,12 @@ services:
     networks:
       - 295fullstack
 
+        #  backend:
+        #    container_name: 295fs_backend
+        #    depends_on:
+        #      db:
+        #        condition: service_healthy
+        #    image: hftamayo/295fs_be:stable
 
 volumes:
   mongodb-data:
