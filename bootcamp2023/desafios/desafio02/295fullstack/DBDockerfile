@@ -7,10 +7,12 @@ MAINTAINER @heftamayo
 WORKDIR /295fullstack
 COPY mongo-init.js ./
 
-RUN mongo --host localhost --port 27017 mongo-init.js
+#this was a mistake: I shall not run a data seeding during image creation
+#RUN mongosh --host localhost --port 27017 mongo-init.js
 
 EXPOSE 27017
 
 VOLUME /data/db
-CMD ["mongod", "--auth", "--bind_ip_all", "--port", "27017"]
+
+ENTRYPOINT ["mongod", "--auth", "--bind_ip_all", "--port", "27017"]
 
