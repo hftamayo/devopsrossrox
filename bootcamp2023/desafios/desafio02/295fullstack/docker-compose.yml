@@ -9,7 +9,7 @@ services:
       dockerfile: Dockerfile.mongo
     volumes:
       - mongodb-data:/data/db
-      - ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+      #- ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
     command: mongod --bind_ip_all
     healthcheck:
       test: ["CMD", "mongo", "admin", "--eval", "db.serverStatus()"]
