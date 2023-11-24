@@ -1,6 +1,6 @@
 # DevOps Bootcamp #
 
-This is the repository of the 4th edition of DevOps Bootcamp by Rossana Suarez
+TODO
 
 ## Content ##
 - Challenges
@@ -8,7 +8,7 @@ This is the repository of the 4th edition of DevOps Bootcamp by Rossana Suarez
 - examples and other exercises
 
 
-## 1. Challenge 01 ##
+## 1. Challenge 02 ##
 
 ### 1.1 Requirements ###
 [requirements](https://github.com/hftamayo/devopsrossrox/blob/main/bootcamp2023/desafios/desafio01/enunciado.md)
