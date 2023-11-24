@@ -10,7 +10,7 @@ RUN yarn install --frozen-lockfile
 
 RUN cp .env.template .env
 
-ENV DATABASE_URL=mongodb://localhost:27017
+ENV DATABASE_URL=mongodb://mongodb:27017
 ENV DATABASE_NAME=TopicstoreDB
 ENV HOST=localhost
 ENV PORT=5000
