@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#stage 1: cloning the repo
+
+
 #Build and Push BackEnd 295fullstack
 docker build -t 295fs_be:stable Dockerfile.be
 sleep 5
