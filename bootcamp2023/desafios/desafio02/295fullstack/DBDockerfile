@@ -4,10 +4,14 @@ FROM mongo:7.0.2
 
 MAINTAINER @heftamayo
 
+RUN mkdir -p /usr/bin/
+
+ENV PATH /usr/bin:/usr/sbin:PATH
+
 WORKDIR /295fullstack
 COPY db/mongo-init.js /docker-entrypoint-initdb.d/mongo-init.js
 
-RUN apt-get update && apt-get install -y mongodb-shell
+RUN apt-get update && apt-get install -y apt-utils mongodb-mongosh
 
 #this was a mistake: I shall not run a data seeding during image creation
 #RUN mongosh --host localhost --port 27017 mongo-init.js
