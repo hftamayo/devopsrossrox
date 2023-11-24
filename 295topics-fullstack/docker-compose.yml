@@ -1,0 +1,50 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: mongodb
+    restart: on-failure
+    build:
+      context: .
+      dockerfile: Dockerfile.mongo
+    volumes:
+      - mongodb-data:/data/db
+      #- ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
+    command: mongod --bind_ip_all
+    healthcheck:
+      test: ["CMD", "mongosh", "--host", "localhost", "--port", "27017",  "--eval", "db.serverStatus()"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+    networks:
+      - 295fullstack
+
+  mongo-express:
+    container_name: mongoadmin
+    depends_on:
+      db:
+        condition: service_healthy
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    #env_file:
+    #  - ./.envmongoadmin
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_URL= mongodb://mongodb:27017/
+    networks:
+      - 295fullstack
+
+        #  backend:
+        #    container_name: 295fs_backend
+        #    depends_on:
+        #      db:
+        #        condition: service_healthy
+        #    image: hftamayo/295fs_be:stable
+
+volumes:
+  mongodb-data:
+
+networks:
+  295fullstack:
