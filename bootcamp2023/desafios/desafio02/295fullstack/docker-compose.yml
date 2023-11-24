@@ -12,7 +12,7 @@ services:
       #- ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js
     command: mongod --bind_ip_all
     healthcheck:
-      test: ["CMD", "mongo", "admin", "--eval", "db.serverStatus()"]
+      test: ["CMD", "mongosh", "--host", "localhost", "--port", "27017",  "--eval", "db.serverStatus()"]
       interval: 10s
       timeout: 5s
       retries: 3
