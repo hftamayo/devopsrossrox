@@ -6,7 +6,7 @@ services:
     restart: on-failure
     build:
       context: .
-      dockerfile: DBDockerfile
+      dockerfile: Dockerfile.mongo
     volumes:
       - mongodb-data:/data/db
       - ./db/mongo-init.js:/docker-entrypoint-initdb.d/mongo-init.js

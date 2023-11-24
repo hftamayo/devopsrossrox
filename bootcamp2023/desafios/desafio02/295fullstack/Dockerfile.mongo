@@ -18,7 +18,5 @@ RUN apt-get update && apt-get install -y apt-utils mongodb-mongosh
 
 EXPOSE 27017
 
-VOLUME /data/db
-
-ENTRYPOINT ["mongod", "--auth", "--bind_ip_all", "--port", "27017"]
+CMD ["mongod", "--auth", "--bind_ip_all", "--port", "27017"]
 
