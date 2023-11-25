@@ -39,10 +39,14 @@ sleep 5
 docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 sleep 5
 
-docker push 295fs_be:stable
+docker tag 295fs_be:stable hftamayo/295fs_be:stable
+sleep 2
+docker push hftamayo/295fs_be:stable
 sleep 5
 
-docker push 295fs_fe:stable
+docker tag 295fs_fe:stable hftamayo/295fs_fe:stable
+sleep 2
+docker push hftamayo/295fs_fe:stable
 sleep 5
 
 echo "BUILD AND PUSH script finished"
