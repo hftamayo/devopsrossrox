@@ -20,6 +20,7 @@ services:
 
   mongo-express:
     container_name: mongoadmin
+    restart: on-failure
     depends_on:
       db:
         condition: service_healthy
