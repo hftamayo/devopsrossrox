@@ -41,7 +41,14 @@ services:
     depends_on:
       db:
         condition: service_healthy
-        image: hftamayo/295fs_be:stable
+    image: hftamayo/295fs_be:stable
+
+  frontend:
+    container_name: 295fs_frontend
+    depends_on:
+      db:
+        condition: service_healthy
+    image: hftamayo/295fs_fe:stable
 
 volumes:
   mongodb-data:
