@@ -50,8 +50,11 @@ docker push hftamayo/295fs_fe:stable
 sleep 5
 
 echo "BUILD AND PUSH script finished"
+docker logout
 sleep 2
+
 echo "DEPLOYING CONTAINERS"
+sleep 2
 docker-compose up -d
 sleep 5
 echo "THE APPLICATION IS UP AND RUNNING"
