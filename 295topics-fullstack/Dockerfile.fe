@@ -2,12 +2,12 @@ FROM node:16-alpine AS builder
 
 WORKDIR /295fullstack
 
-COPY package.json  ./
+COPY ./frontend/package.json  ./
 
-RUN apt update && pat install yarn
+RUN apk add yarn
 
 RUN yarn install --frozen-lockfile
 
-COPY . .
+COPY ./frontend/ .
 
 CMD ["node", "server.js"]
