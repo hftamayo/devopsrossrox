@@ -37,17 +37,16 @@ services:
       - 295fullstack
 
   backend:
-    container_name: 295fs_backend
+    container_name: 295fsbe
     depends_on:
       db:
         condition: service_healthy
     image: hftamayo/295fs_be:stable
 
   frontend:
-    container_name: 295fs_frontend
+    container_name: 295fsfe
     depends_on:
-      db:
-        condition: service_healthy
+      backend
     image: hftamayo/295fs_fe:stable
 
 volumes:
