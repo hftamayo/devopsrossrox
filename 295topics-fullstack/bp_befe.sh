@@ -28,10 +28,12 @@ else
 fi
 
 #stage 2: Build and Push BackEnd 295fullstack
-docker build -t 295fs_be:stable Dockerfile.be
+cd 295topics-fullstack
+
+docker build -t 295fs_be:stable -f Dockerfile.be .
 sleep 5
 
-docker build -t 295fs_fe:stable Dockerfile.fe
+docker build -t 295fs_fe:stable -f Dockerfile.fe .
 sleep 5
 
 docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
