@@ -9,7 +9,7 @@ RUN apk add yarn
 RUN yarn install --frozen-lockfile
 
 COPY ./frontend/ .
-RUN echo "API_URI=http://295fsbe:5000/topics" > .env
-ENV API_URI http://295fsbe:5000/topic
+RUN echo "API_URI=http://295fsbe:5000/api/topics" > .env
+ENV API_URI http://295fsbe:5000/api/topics
 
 CMD ["node", "server.js"]
