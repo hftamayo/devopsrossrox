@@ -5,6 +5,10 @@ WORKDIR /295fullstack
 COPY ./backend/package.json  ./
 
 RUN apk add yarn
+RUN apk add bash
+
+RUN yarn add express
+RUN yarn global add ts-node
 
 RUN yarn install --frozen-lockfile
 

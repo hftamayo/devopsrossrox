@@ -5,7 +5,9 @@ WORKDIR /295fullstack
 COPY ./frontend/package.json  ./
 
 RUN apk add yarn
+RUN apk add bash
 
+RUN yarn add express
 RUN yarn install --frozen-lockfile
 
 COPY ./frontend/ .
