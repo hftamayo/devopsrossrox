@@ -2,7 +2,7 @@ version: "3.8"
 
 services:
   db:
-    container_name: 295wordsdb
+    container_name: db
     image: postgres:14.1-alpine
     restart: always
     env_file: 
@@ -11,7 +11,7 @@ services:
       POSTGRES_USER: $API_USER
       POSTGRES_PASSWORD: $API_PASSWORD
       POSTGRES_DB: $API_DATABASE
-      POSTGRES_HOST: $PG_HOST
+      POSTGRES_HOST: $POSTGRES_HOST
     ports:
       - $PG_LOCAL_PORT:$PG_DOCKER_PORT
     healthcheck:
@@ -22,6 +22,26 @@ services:
     volumes:
       - 295wordsdata:/var/lib/postgresql/data
       - ./db/words.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - 295wordsnetwork
+
+  api:
+    container_name: 295wordsapi
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: always
+    build:
+      context: ./
+      dockerfile: Dockerfile.java
+    env_file: ./.env
+    ports:
+      - $API_LOCAL_PORT:$API_DOCKER_PORT
+    environment:
+      PGHOST: $POSTGRES_HOST
+      PGPORT: $PG_DOCKER_PORT
+      PGUSER: $PG_USER
+      PGPASSWORD: $PG_PASSWORD
     networks:
       - 295wordsnetwork
 
