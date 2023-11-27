@@ -12,4 +12,11 @@
 ![[Pasted image 20231108200128.png]]
 
 
-8. 
+8. si quiero levantar la virtual pero me dice que ya existe, buscar su id para luego destruirla (quizas fue una maquina zombie):
+
+	vagrant global status
+	vagrant destroy {VM ID}
+	vagrant up
+
+
+9. 
