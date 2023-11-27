@@ -1,34 +1,73 @@
-# DevOps Bootcamp #
-
-TODO
+# DevOps Bootcamp 2023: Challenge 02 #
 
 ## Content ##
-- Challenges
-- Personal Notes in Obsidian format
-- examples and other exercises
+- Overview
+- 295topics-fullstack
+- 295words-docker
+- References
 
+## 1. Overview ##
+In this branch you can find the source files and walkthroughs and technical references about 
+how to create and deploy two multi layer monolith Web Application on Docker containers, the technical stack of
+each application is the next:
 
-## 1. Challenge 02 ##
+### 1.1 295topics-fullstack ###
+- Data Layer: MongoDB (local instance).
+- Backend: Express + Typescript.
+- Frontend: Node.JS + EJS Template.
+- Mongo-Express: Tool for MongoDB Administration (similar to phpmyadmin / pgadmin.)
+- On premise deployment each of the above layer belongs to a separate container. The automation script 
+requires two variables (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD), they may be created in bash environment.
+- On cloud: The first three containers will be deployed on Google Cloud Platform.
 
-### 1.1 Requirements ###
-[requirements](https://github.com/hftamayo/devopsrossrox/blob/main/bootcamp2023/desafios/desafio01/enunciado.md)
+### 1.1 295words-docker ###
+- Data Layer:
+- Backend: 
+- Frontend: 
+- On premise deployment 
+- On cloud: 
 
-### 1.2 Bugs ###
-* Not seeding if the data layer is already set up -> solved by [William Yataco](https://github.com/hftamayo/devopsrossrox/pull/1)
-* Checking if the data layer exists -> solved by [William Yataco](https://github.com/hftamayo/devopsrossrox/pull/1)
-* Possible security bugs since the script requires admin privileges
-* Using colors for messages to the user -> solved by [William Yataco](https://github.com/hftamayo/devopsrossrox/pull/1)
+## 2. Project 1: 295topics-fullstack ##
 
-### 1.3 Script Details ###
-[source_code](https://github.com/hftamayo/devopsrossrox/blob/main/bootcamp2023/desafios/desafio01/entregable/travelapp.sh)
+### 2.1 Requirements ###
+[requirements in spanish](https://github.com/hftamayo/devopsrossrox/blob/desafio02/295topics-fullstack/enunciadosp.md)
 
-### 1.4 Proof of Concept ###
-[Proof of Concept](https://youtu.be/bg_oXN9kMOA)
+### 2.2 Walkthrough ###
+* [Planning]()
+* [Database]()
+* [Backend]() 
+* [Frontend]()
+* [Automation on premise]()
+* [Automation on cloud]()
 
-### 1.5 Changes after PR0001 by William Yataco ###
-![PR001](./snapshots/challenge01_pr01.png)
+### 2.3 Demo On Premise ###
+* []()
+* ![PR001]()
 
-## 2 Challenge 02 ##
+### 2.4 Demo On Cloud ###
+* []()
+* ![PR001]()
 
-### References ###
+## 3. Project 2: 295 Words ##
+
+### 3.1 Requirements ###
+[requirements in spanish](https://github.com/hftamayo/devopsrossrox/blob/desafio02/295topics-fullstack/enunciadosp.md)
+
+### 3.2 Walkthrough ###
+* [Planning]()
+* [Database]()
+* [Backend]() 
+* [Frontend]()
+* [Automation on premise]()
+* [Automation on cloud]()
+
+### 3.3 Demo On Premise ###
+* []()
+* ![PR001]()
+
+### 3.4 Demo On Cloud ###
+* []()
+* ![PR001]()
+
+## 4. References ##
 * [MongoDB-Express Admin Tool Official Repo](https://github.com/mongo-express/mongo-express)
