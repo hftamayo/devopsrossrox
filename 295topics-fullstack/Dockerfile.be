@@ -2,7 +2,7 @@ FROM node:16-alpine AS builder
 
 WORKDIR /295fullstack
 
-COPY ./backend/package.json  ./
+COPY ./backend/*.json  ./
 
 RUN apk add yarn
 RUN apk add bash
