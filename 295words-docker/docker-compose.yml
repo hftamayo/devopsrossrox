@@ -45,6 +45,17 @@ services:
     networks:
       - 295wordsnetwork
 
+  web:
+    container_name: 295wordsfe
+    restart: on-failure
+    depends_on:
+      - 295wordsapi
+    image: hftamayo/295wordsfe:stable
+    ports:
+      - "8088:8088"
+    networks:
+      - 295wordsnetwork
+
 volumes:
   295wordsdata:
 
