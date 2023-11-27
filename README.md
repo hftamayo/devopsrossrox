@@ -29,6 +29,8 @@ This is the repository of the 4th edition of DevOps Bootcamp by Rossana Suarez
 ![PR001](./snapshots/challenge01_pr01.png)
 
 ## 2 Challenge 02 ##
+Due to the complexity of challenge02, theres is a dedicated branch for it, for further details please use the next link:
+[challenge 02 readme](https://github.com/hftamayo/devopsrossrox/blob/desafio02/README.md)
 
 ### References ###
 * [MongoDB-Express Admin Tool Official Repo](https://github.com/mongo-express/mongo-express)
