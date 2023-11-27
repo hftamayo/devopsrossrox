@@ -1,0 +1,32 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: 295wordsdb
+    image: postgres:14.1-alpine
+    restart: always
+    env_file: 
+      - ./.env
+    environment:
+      POSTGRES_USER: $API_USER
+      POSTGRES_PASSWORD: $API_PASSWORD
+      POSTGRES_DB: $API_DATABASE
+      POSTGRES_HOST: $PG_HOST
+    ports:
+      - $PG_LOCAL_PORT:$PG_DOCKER_PORT
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - 295wordsdata:/var/lib/postgresql/data
+      - ./db/words.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - 295wordsnetwork
+
+volumes:
+  295wordsdata:
+
+networks:
+  295wordsnetwork:
