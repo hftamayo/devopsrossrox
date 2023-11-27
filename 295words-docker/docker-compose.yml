@@ -4,7 +4,7 @@ services:
   db:
     container_name: db
     image: postgres:14.1-alpine
-    restart: always
+    restart: on-failure
     env_file: 
       - ./.env
     environment:
@@ -30,7 +30,7 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    restart: always
+    restart: unless-stopped
     build:
       context: ./
       dockerfile: Dockerfile.java
@@ -47,7 +47,7 @@ services:
 
   web:
     container_name: 295wordsfe
-    restart: on-failure
+    restart: unless-stopped
     depends_on:
       - 295wordsapi
     image: hftamayo/295wordsfe:stable
