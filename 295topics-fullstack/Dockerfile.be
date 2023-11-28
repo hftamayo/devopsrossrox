@@ -6,6 +6,7 @@ COPY ./backend/*.json  ./
 
 RUN apk add yarn
 RUN apk add bash
+RUN apk add curl
 
 RUN yarn install --frozen-lockfile
 
