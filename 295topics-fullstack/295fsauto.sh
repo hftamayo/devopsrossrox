@@ -4,7 +4,7 @@
 BC_PROJECT="295devops"
 HOME_PROJECT="desafio02"
 GH_REPO="https://github.com/hftamayo/devopsrossrox.git"
-BRANCH_REPO="desafio02"
+BRANCH_REPO="grial01"
 
 
 #stage 1: cloning the repo
@@ -22,8 +22,8 @@ if [ -d $HOME_PROJECT ]; then
 	git checkout $BRANCH_REPO
 	git pull
 else
-	git clone $GH_REPO $BRANCH_REPO
-	cd $BRANCH_REPO
+	git clone $GH_REPO $HOME_PROJECT
+	cd $HOME_PROJECT
 	git checkout $BRANCH_REPO
 fi
 
