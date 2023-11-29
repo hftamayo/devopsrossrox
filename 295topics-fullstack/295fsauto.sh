@@ -55,7 +55,7 @@ sleep 2
 
 echo "DEPLOYING CONTAINERS"
 sleep 2
-docker-compose up -d
+docker-compose -p 295fs  up -d
 sleep 5
 echo "THE APPLICATION IS UP AND RUNNING"
 sleep 1
