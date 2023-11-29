@@ -13,7 +13,7 @@ services:
       - mongodb_data:/data/db
     command: mongod --bind_ip_all
     healthcheck:
-      test: ["CMD", "mongosh", "--host", "localhost", "--port", "27017",  "--eval", "db.serverStatus()"]
+      test: ["CMD", "bash", "-c", "mongosh --eval 'db.adminCommand(\"ping\")'"]
       interval: 10s
       timeout: 5s
       retries: 3
