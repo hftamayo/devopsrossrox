@@ -17,8 +17,9 @@ services:
       interval: 10s
       timeout: 5s
       retries: 3
+      start_period: 30s
     networks:
-      - 295fullstack
+      - 295fsnetwork
 
   mongo-express:
     container_name: mongoadmin
@@ -36,7 +37,7 @@ services:
       - ME_CONFIG_MONGODB_PORT=27017
       - ME_CONFIG_MONGODB_URL= mongodb://mongodb:27017/
     networks:
-      - 295fullstack
+      - 295fsnetwork
 
   backend:
     container_name: 295fsbe
@@ -48,7 +49,7 @@ services:
     ports:
       - "5000:5000"
     networks:
-      - 295fullstack
+      - 295fsnetwork
 
   frontend:
     container_name: 295fsfe
@@ -59,10 +60,10 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - 295fullstack
+      - 295fsnetwork
 
 volumes:
   mongodb-data:
 
 networks:
-  295fullstack:
+  295fsnetwork:
