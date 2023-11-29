@@ -10,7 +10,7 @@ services:
     ports:
       - "27017:27017"
     volumes:
-      - mongodb-data:/data/db
+      - mongodb_data:/data/db
     command: mongod --bind_ip_all
     healthcheck:
       test: ["CMD", "mongosh", "--host", "localhost", "--port", "27017",  "--eval", "db.serverStatus()"]
@@ -63,7 +63,7 @@ services:
       - 295fsnetwork
 
 volumes:
-  mongodb-data:
+  mongodb_data:
 
 networks:
   295fsnetwork:
