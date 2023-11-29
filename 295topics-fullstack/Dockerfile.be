@@ -10,13 +10,19 @@ RUN apk add curl
 
 RUN yarn install --frozen-lockfile
 
-COPY ./backend/.env.template ./.env
-
-ENV DATABASE_URL=mongodb://mongodb:27017
-ENV DATABASE_NAME=TopicstoreDB
-ENV HOST=localhost
-ENV PORT=5000
-
 COPY ./backend/. .
+
+COPY ./backend/.env.template ./.env
+RUN sed -i 's/DATABASE_URL=.*$/DATABASE_URL=mongodb:\/\/mongodb:27017/' ./.env
+RUN sed -i 's/DATABASE_NAME=.*$/DATABASE_NAME=TopicstoreDB/' ./.env
+RUN sed -i 's/HOST=.*$/HOST=localhost/' ./.env
+RUN sed -i 's/PORT=.*$/PORT=5000/' ./.env
+
+RUN source ./.env
+
+#ENV DATABASE_URL=mongodb://mongodb:27017
+#ENV DATABASE_NAME=TopicstoreDB
+#ENV HOST=localhost
+#ENV PORT=5000
 
 CMD ["yarn", "start"]
