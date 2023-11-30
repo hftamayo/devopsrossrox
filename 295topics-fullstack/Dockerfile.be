@@ -18,6 +18,7 @@ RUN sed -i 's/DATABASE_NAME=.*$/DATABASE_NAME=TopicstoreDB/' ./.env
 RUN sed -i 's/HOST=.*$/HOST=localhost/' ./.env
 RUN sed -i 's/PORT=.*$/PORT=5000/' ./.env
 
+ENV NODE_ENV=development
 ENV DATABASE_URL=mongodb://mongodb:27017
 ENV DATABASE_NAME=TopicstoreDB
 ENV HOST=localhost
