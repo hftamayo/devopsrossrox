@@ -14,6 +14,6 @@ export default {
     },
     app: {
         host: process.env.HOST || 'localhost',
-        port: process.env.PORT || 5000
+        port: +process.env.PORT || 5000
     }
 }
