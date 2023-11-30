@@ -5,7 +5,7 @@ services:
     container_name: db
     image: postgres:14.1-alpine
     restart: on-failure
-    env_file: 
+    env_file:
       - ./.env
     environment:
       POSTGRES_USER: $API_USER
