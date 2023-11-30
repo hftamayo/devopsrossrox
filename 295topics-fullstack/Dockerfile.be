@@ -12,6 +12,8 @@ RUN yarn install --frozen-lockfile
 
 COPY ./backend/. .
 
+RUN yarn add dotenv
+
 COPY ./backend/.env.template ./.env
 RUN sed -i 's/DATABASE_URL=.*$/DATABASE_URL=mongodb:\/\/mongodb:27017/' ./.env
 RUN sed -i 's/DATABASE_NAME=.*$/DATABASE_NAME=TopicstoreDB/' ./.env
