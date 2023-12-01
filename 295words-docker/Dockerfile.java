@@ -11,7 +11,11 @@ RUN mvn clean package
 
 ################# JDK RUN STAGE ################### 
 FROM amazoncorretto:17
+RUN yum  install -y net-tools
+
 WORKDIR /opt/295words
 COPY --from=build /opt/295words/target/words-jar-with-dependencies.jar ./words001.jar
+
+EXPOSE 8002
 
 ENTRYPOINT ["java", "-jar", "./words001.jar"]
