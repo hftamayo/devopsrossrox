@@ -26,7 +26,7 @@ services:
       - 295wordsnetwork
 
   api:
-    container_name: 295wordsapi
+    container_name: 295wapi
     depends_on:
       db:
         condition: service_healthy
@@ -46,7 +46,7 @@ services:
       - 295wordsnetwork
 
   web:
-    container_name: 295wordsfe
+    container_name: 295wfe
     restart: unless-stopped
     depends_on:
       - 295wordsapi
