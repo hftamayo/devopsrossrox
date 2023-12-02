@@ -70,6 +70,7 @@ requires two variables (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD), they may b
 * ![PR001]()
 
 ## 4. References ##
-* [MongoDB-Express Admin Tool Official Repo](https://github.com/mongo-express/mongo-express)
+* [Building fat jar files](https://jenkov.com/tutorials/maven/maven-build-fat-jar.html)
+* [Adding manifest to the jar file](https://stackoverflow.com/questions/73143677/no-main-manifest-attribute-in-jar-file-error-in-maven-project)
 * command for check mongodb status: docker exec -it mongodb bash -c "mongosh --eval 'db.adminCommand(\"ping\")'"
 
