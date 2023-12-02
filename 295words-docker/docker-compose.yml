@@ -54,7 +54,7 @@ services:
       context: ./
       dockerfile: Dockerfile.go
     ports:
-      - "8088:8088"
+      - "80:80"
     networks:
       - 295wordsnetwork
 

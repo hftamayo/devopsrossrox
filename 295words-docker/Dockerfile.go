@@ -15,6 +15,6 @@ WORKDIR /app
 COPY --from=builder /app/dispatcher ./
 COPY --from=builder /app/static ./static
 
-EXPOSE 8088
+EXPOSE 80
 
 CMD ["./dispatcher"]
