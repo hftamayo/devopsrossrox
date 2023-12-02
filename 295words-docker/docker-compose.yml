@@ -49,8 +49,10 @@ services:
     container_name: 295wfe
     restart: unless-stopped
     depends_on:
-      - 295wordsapi
-    image: hftamayo/295wordsfe:stable
+      - api
+    build:
+      context: ./
+      dockerfile: Dockerfile.go
     ports:
       - "8088:8088"
     networks:
