@@ -58,17 +58,17 @@ echo "Docker images generated"
 docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 sleep 5
 
-docker tag 295words_be:stable hftamayo/295words_be:stable
+docker tag 295words_be:stable hftamayo/295words_be:1.0.0
 sleep 2
 docker push hftamayo/295words_be:stable
 sleep 5
 
-docker tag 295words_fe:stable hftamayo/295words_fe:stable
+docker tag 295words_fe:stable hftamayo/295words_fe:1.0.0
 sleep 2
 docker push hftamayo/295words_fe:stable
 sleep 5
 
-docker tag 295words_db:stable hftamayo/295words_db:stable
+docker tag 295words_db:stable hftamayo/295words_db:1.0.0
 sleep 2
 docker push hftamayo/295words_db:stable
 sleep 5
