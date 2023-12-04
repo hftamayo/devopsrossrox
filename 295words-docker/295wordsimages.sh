@@ -45,41 +45,35 @@ go mod init
 cd ..
 
 #STAGE #: docker images build and push
-docker build -t 295words_be:stable -f Dockerfile.java .
+docker build -t 295words_be:stable-1.0.0 -f Dockerfile.java .
 sleep 5
 
-docker build -t 295words_fe:stable -f Dockerfile.go .
+docker build -t 295words_fe:stable-1.0.0 -f Dockerfile.go .
 sleep 5
 
-docker build -t 295words_db:stable -f Dockerfile.pg .
+docker build -t 295words_db:stable-1.0.0 -f Dockerfile.pg .
 sleep 5
 echo "Docker images generated"
 
 docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 sleep 5
 
-docker tag 295words_be:stable hftamayo/295words_be:1.0.0
+docker tag 295words_be:stable-1.0.0 hftamayo/295words_be:stable-1.0.0
 sleep 2
-docker push hftamayo/295words_be:stable
+docker push hftamayo/295words_be:stable-1.0.0
 sleep 5
 
-docker tag 295words_fe:stable hftamayo/295words_fe:1.0.0
+docker tag 295words_fe:stable-1.0.0 hftamayo/295words_fe:stable-1.0.0
 sleep 2
-docker push hftamayo/295words_fe:stable
+docker push hftamayo/295words_fe:stable-1.0.0
 sleep 5
 
-docker tag 295words_db:stable hftamayo/295words_db:1.0.0
+docker tag 295words_db:stable-1.0.0 hftamayo/295words_db:stable-1.0.0
 sleep 2
-docker push hftamayo/295words_db:stable
+docker push hftamayo/295words_db:stable-1.0.0
 sleep 5
 
 echo "Docker images built and pushed"
 docker logout
 sleep 2
 
-echo "DEPLOYING CONTAINERS"
-sleep 2
-docker-compose -p 295words -f docker-compose-images.yml  up -d
-sleep 5
-echo "THE APPLICATION IS UP AND RUNNING"
-sleep 1
