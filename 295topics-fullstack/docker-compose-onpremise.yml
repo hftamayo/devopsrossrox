@@ -19,7 +19,7 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - 295fsnetwork
+      - network
 
   mongo-express:
     container_name: mongoadmin
@@ -37,7 +37,7 @@ services:
       - ME_CONFIG_MONGODB_PORT=27017
       - ME_CONFIG_MONGODB_URL= mongodb://mongodb:27017/
     networks:
-      - 295fsnetwork
+      - network
 
   backend:
     container_name: 295fsbe
@@ -45,25 +45,25 @@ services:
     depends_on:
       db:
         condition: service_healthy
-    image: hftamayo/295fs_be:stable
+    image: hftamayo/295fs_be:stable-1.0.0
     ports:
       - "5000:5000"
     networks:
-      - 295fsnetwork
+      - network
 
   frontend:
     container_name: 295fsfe
     restart: on-failure
     depends_on:
       - backend
-    image: hftamayo/295fs_fe:stable
+    image: hftamayo/295fs_fe:stable-1.0.0
     ports:
       - "3000:3000"
     networks:
-      - 295fsnetwork
+      - network
 
 volumes:
   mongodb_data:
 
 networks:
-  295fsnetwork:
+  network:

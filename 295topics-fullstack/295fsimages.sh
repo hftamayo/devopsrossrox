@@ -30,32 +30,26 @@ fi
 #stage 2: Build and Push BackEnd 295fullstack
 cd 295topics-fullstack
 
-docker build -t 295fs_be:stable -f Dockerfile.be .
+docker build -t 295fs_be:stable-1.0.0 -f Dockerfile.be .
 sleep 5
 
-docker build -t 295fs_fe:stable -f Dockerfile.fe .
+docker build -t 295fs_fe:stable-1.0.0 -f Dockerfile.fe .
 sleep 5
 
 docker login -u $DOCKER_HUB_USERNAME -p $DOCKER_HUB_PASSWORD
 sleep 5
 
-docker tag 295fs_be:stable hftamayo/295fs_be:stable
+docker tag 295fs_be:stable-1.0.0 hftamayo/295fs_be:stable-1.0.0
 sleep 2
-docker push hftamayo/295fs_be:stable
+docker push hftamayo/295fs_be:stable-1.0.0
 sleep 5
 
-docker tag 295fs_fe:stable hftamayo/295fs_fe:stable
+docker tag 295fs_fe:stable-1.0.0 hftamayo/295fs_fe:stable-1.0.0
 sleep 2
-docker push hftamayo/295fs_fe:stable
+docker push hftamayo/295fs_fe:stable-1.0.0
 sleep 5
 
 echo "BUILD AND PUSH script finished"
 docker logout
 sleep 2
 
-echo "DEPLOYING CONTAINERS"
-sleep 2
-docker-compose -p 295fs  up -d
-sleep 5
-echo "THE APPLICATION IS UP AND RUNNING"
-sleep 1
