@@ -1,2 +1,5 @@
 295words-docker/.env
 295words-docker/web/go.mod
+295topics-fullstack/backend/.env
+295topics-fullstack/backend/node_modules
+295topics-fullstack/backend/yarn.lock
