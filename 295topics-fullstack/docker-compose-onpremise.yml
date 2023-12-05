@@ -19,7 +19,9 @@ services:
       retries: 3
       start_period: 30s
     networks:
-      - network
+      network:
+        ipv4_address: 192.168.20.7
+
 
   mongo-express:
     container_name: mongoadmin
@@ -37,7 +39,8 @@ services:
       - ME_CONFIG_MONGODB_PORT=27017
       - ME_CONFIG_MONGODB_URL= mongodb://mongodb:27017/
     networks:
-      - network
+      network:
+        ipv4_address: 192.168.20.8
 
   backend:
     container_name: 295fsbe
@@ -49,7 +52,9 @@ services:
     ports:
       - "5000:5000"
     networks:
-      - network
+      network:
+        ipv4_address: 192.168.20.9
+
 
   frontend:
     container_name: 295fsfe
@@ -60,10 +65,15 @@ services:
     ports:
       - "3000:3000"
     networks:
-      - network
+      network:
+        ipv4_address: 192.168.20.10
 
 volumes:
   mongodb_data:
 
 networks:
   network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24
