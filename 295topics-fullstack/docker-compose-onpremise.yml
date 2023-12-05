@@ -23,7 +23,7 @@ services:
 
   mongo-express:
     container_name: mongoadmin
-    restart: on-failure
+    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
@@ -41,7 +41,7 @@ services:
 
   backend:
     container_name: 295fsbe
-    restart: on-failure
+    restart: unless-stopped
     depends_on:
       db:
         condition: service_healthy
@@ -53,7 +53,7 @@ services:
 
   frontend:
     container_name: 295fsfe
-    restart: on-failure
+    restart: unless-stopped
     depends_on:
       - backend
     image: hftamayo/295fs_fe:stable-1.0.0
