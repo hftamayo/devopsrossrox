@@ -15,11 +15,11 @@ COPY ./backend/. .
 RUN yarn add dotenv
 
 COPY ./backend/.env.template ./.env
-RUN sed -i 's/NODE_ENV=.*$/NODE_ENV=development/' ./.env
-RUN sed -i 's/DATABASE_URL=.*$/DATABASE_URL=mongodb:\/\/mongodb:27017/' ./.env
-RUN sed -i 's/DATABASE_NAME=.*$/DATABASE_NAME=TopicstoreDB/' ./.env
-RUN sed -i 's/HOST=.*$/HOST=localhost/' ./.env
-RUN sed -i 's/PORT=.*$/PORT=5000/' ./.env
+RUN sed -i '1iNODE_ENV=testing01' ./.env
+RUN sed -i 's/DATABASE_URL=.*$/DATABASE_URL=mongodb:\/\/testing02:1234/' ./.env
+RUN sed -i 's/DATABASE_NAME=.*$/DATABASE_NAME=testing04/' ./.env
+RUN sed -i 's/HOST=.*$/HOST=testing05/' ./.env
+RUN sed -i 's/PORT=.*$/PORT=5678/' ./.env
 
 #ENV NODE_ENV=development
 #ENV DATABASE_URL=mongodb://mongodb:27017
@@ -29,4 +29,4 @@ RUN sed -i 's/PORT=.*$/PORT=5000/' ./.env
 
 EXPOSE 5000
 
-CMD ["yarn", "start"]
+CMD ["yarn", "run", "start:with-env"]
