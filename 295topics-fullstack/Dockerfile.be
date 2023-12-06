@@ -22,7 +22,7 @@ RUN sed -i 's/HOST=.*$/HOST=0.0.0.0/' ./.env
 RUN sed -i 's/PORT=.*$/PORT=5000/' ./.env
 
 #adding a script for loading env with Typescript
-RUN sed -i '/"start": "ts-node src\/app"/a\ "start:with-env": "ts-node -r dotenv\/config src\/app"' ./package.json
+RUN sed -i '/"scripts": {/a\    "start:with-env": "ts-node -r dotenv/config src\/app",' package.json
 
 EXPOSE 5000
 
