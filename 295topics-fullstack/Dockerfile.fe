@@ -15,7 +15,7 @@ COPY ./frontend/ .
 RUN echo "API_URI=http://295fsbe:5000/api/topics" > .env
 RUN echo " " > .env
 
-RUN sed -i '/"test": "echo\"Error: no test specified\" && exit 1"/a\ "start:with-env": "node -r dotenv\/config server.js"' package.json
+RUN sed -i '/"scripts": {/a\    "start:with-env": "node -r dotenv/config server.js",' package.json
 
 EXPOSE 3000
 
