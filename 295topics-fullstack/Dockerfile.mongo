@@ -4,7 +4,7 @@ FROM mongo:7.0.2
 
 MAINTAINER @heftamayo
 
-COPY db/mongo-init.js /docker-entrypoint-initdb.d/
+COPY db/mongo-initutf8.js /docker-entrypoint-initdb.d/
 
 EXPOSE 27017
 
