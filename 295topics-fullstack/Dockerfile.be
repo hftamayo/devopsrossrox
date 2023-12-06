@@ -21,11 +21,8 @@ RUN sed -i 's/DATABASE_NAME=.*$/DATABASE_NAME=TopicstoreDB/' ./.env
 RUN sed -i 's/HOST=.*$/HOST=0.0.0.0/' ./.env
 RUN sed -i 's/PORT=.*$/PORT=5000/' ./.env
 
-#ENV NODE_ENV=development
-#ENV DATABASE_URL=mongodb://mongodb:27017
-#ENV DATABASE_NAME=TopicstoreDB
-#ENV HOST=localhost
-#ENV PORT=5000
+#adding a script for loading env with Typescript
+RUN sed -i '/"start": "ts-node src\/app"/a\ "start:with-env": "ts-node -r dotenv\/config src\/app"' ./package.json
 
 EXPOSE 5000
 
