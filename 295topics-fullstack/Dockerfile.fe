@@ -13,7 +13,7 @@ RUN yarn add dotenv
 
 COPY ./frontend/ .
 RUN echo "API_URI=http://295fsbe:5000/api/topics" > .env
-RUN echo " " > .env
+RUN echo " " >> .env
 
 RUN sed -i '/"scripts": {/a\    "start:with-env": "node -r dotenv/config server.js",' package.json
 
