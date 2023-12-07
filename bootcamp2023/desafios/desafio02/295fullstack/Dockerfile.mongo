@@ -1,0 +1,12 @@
+#Data layer container
+#we can choose mongo:latest as well but for security reasons we'll go for the stable version
+FROM mongo:7.0.2
+
+MAINTAINER @heftamayo
+
+COPY db/mongo-init.js /docker-entrypoint-initdb.d/
+
+EXPOSE 27017
+
+CMD ["mongod", "--auth", "--bind_ip_all", "--port", "27017"]
+

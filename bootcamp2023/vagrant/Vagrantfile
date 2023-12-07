@@ -1,0 +1,31 @@
+# -*- mode: ruby -*-
+# vi: set ft=ruby :
+
+Vagrant.configure("2") do |config|
+  # config.vm.box = "generic/ubuntu2204"
+  config.vm.box = "hashicorp/bionic64"
+  config.vm.network "private_network", ip: "192.168.56.101"
+  config.vm.network "forwarded_port", guest: 80, host: 8081 #localhost
+  config.vm.network "forwarded_port", guest: 22, host: 2222 #sh
+  config.vm.network "forwarded_port", guest: 8080, host: 1234 #alternative port
+  config.vm.network "forwarded_port", guest: 8000, host: 1256 #alternative port
+  config.vm.network "forwarded_port", guest: 3306, host: 1260 #mysql
+  config.vm.hostname = "hashibionic"
+  config.vm.synced_folder "../../.", "/puente", disabled: false
+  config.vm.disk :disk, size: "40GB", primary: true
+  config.vm.provider "virtualbox" do |vb|
+     vb.memory = "2048"
+     vb.cpus = "2"
+     vb.name = "hashibionic"
+     
+    # Configure a separate virtual disk
+    #vb.customize ['createhd', '--filename', '/media/hftamayo/a6d1f8eb-760a-425c-aa80-3d539555f0e0/opt/devops/vms/hashibionic.vdi', '--size', '40960']
+    #vb.customize ['storageattach', :id, '--storagectl', 'SATA Controller', '--port', 1, '--device', 0, '--type', 'hdd', '--medium', '/media/hftamayo/a6d1f8eb-760a-425c-aa80-3d539555f0e0/opt/devops/vms/hashibionic.vdi']     
+  end
+
+  config.vm.provision "shell", inline: <<-SHELL
+      echo "-------------------- Updating package lists"
+      sudo apt-get update -y
+      sudo apt install -y git curl wget 
+  SHELL
+end
