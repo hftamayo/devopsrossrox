@@ -71,6 +71,7 @@ requires two variables (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD), they may b
 
 ## 4. References ##
 ### Exercise 1: MongoDB+TS+Node ###
+* [MongoDB-Express Admin Tool Official Repo](https://github.com/mongo-express/mongo-express)
 * [Post on Stackoverflow about no fetching data from MongoDB](https://stackoverflow.com/questions/63460493/node-with-mongodb-atlas-docker-image-return-empty-array)
 * [Personal Post on StackOverflow requesting help for fetching data from Mongo](https://stackoverflow.com/questions/77616244/getting-a-json-with-no-data-between-mongodb-container-and-tsexpress-container)
 * [Matrix of Compatibility between MongoDB and Node's Mongo Driver](https://www.mongodb.com/docs/drivers/node/current/compatibility/)
