@@ -70,7 +70,13 @@ requires two variables (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD), they may b
 * ![PR001]()
 
 ## 4. References ##
+### Exercise 1: MongoDB+TS+Node ###
+* [Post on Stackoverflow about no fetching data from MongoDB](https://stackoverflow.com/questions/63460493/node-with-mongodb-atlas-docker-image-return-empty-array)
+* [Personal Post on StackOverflow requesting help for fetching data from Mongo](https://stackoverflow.com/questions/77616244/getting-a-json-with-no-data-between-mongodb-container-and-tsexpress-container)
+* [Matrix of Compatibility between MongoDB and Node's Mongo Driver](https://www.mongodb.com/docs/drivers/node/current/compatibility/)
+* command for check mongodb status: docker exec -it mongodb bash -c "mongosh --eval 'db.adminCommand(\"ping\")'"
+
+### Exercise 2: Golang+Java ###
 * [Building fat jar files](https://jenkov.com/tutorials/maven/maven-build-fat-jar.html)
 * [Adding manifest to the jar file](https://stackoverflow.com/questions/73143677/no-main-manifest-attribute-in-jar-file-error-in-maven-project)
-* command for check mongodb status: docker exec -it mongodb bash -c "mongosh --eval 'db.adminCommand(\"ping\")'"
 
