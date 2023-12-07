@@ -8,5 +8,5 @@ COPY db/mongo-initutf8.js /docker-entrypoint-initdb.d/
 
 EXPOSE 27017
 
-CMD ["--bind_ip_all", "--port", "27017"]
+CMD ["mongod", "--bind_ip_all", "--port", "27017"]
 
