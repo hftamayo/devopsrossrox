@@ -30,7 +30,7 @@ requires two variables (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD), they may b
 ## 2. Project 1: 295topics-fullstack ##
 
 ### 2.1 Requirements ###
-[requirements in spanish](https://github.com/hftamayo/devopsrossrox/blob/desafio02/295topics-fullstack/enunciadosp.md)
+[requirements in spanish](./295topics-fullstack/enunciadosp.md)
 
 ### 2.2 Walkthrough ###
 * [Planning]()
@@ -51,7 +51,7 @@ requires two variables (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD), they may b
 ## 3. Project 2: 295 Words ##
 
 ### 3.1 Requirements ###
-[requirements in spanish](https://github.com/hftamayo/devopsrossrox/blob/desafio02/295topics-fullstack/enunciadosp.md)
+[requirements in spanish](./295topics-fullstack/enunciadosp.md)
 
 ### 3.2 Walkthrough ###
 * [Planning]()

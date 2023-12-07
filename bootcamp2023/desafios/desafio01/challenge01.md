@@ -10,9 +10,9 @@
 * Using colors for messages to the user -> solved by [William Yataco](https://github.com/hftamayo/devopsrossrox/pull/1)
 
 ## 1.3 Solution to the challenge ##
-[source_code](./entregable/travelapp.sh)
-[a very prior version of the final script](./entregable/monolamp_experimental.sh)
-[vagrant script for spinning up a VM for testing purposes](./entregable/vagrant/Vagrantfile)
+- [source_code](./entregable/travelapp.sh)
+- [a very prior version of the final script](./entregable/monolamp_experimental.sh)
+- [vagrant script for spinning up a VM for testing purposes](./entregable/vagrant/Vagrantfile)
 
 ## 1.4 Proof of Concept ##
 [Proof of Concept](https://youtu.be/bg_oXN9kMOA)
