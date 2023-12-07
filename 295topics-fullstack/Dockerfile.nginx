@@ -1,0 +1,27 @@
+# Stage 1: Modify .env file
+FROM alpine:3.15
+
+RUN apk add --no-cache sed
+
+COPY ./backend/.env.template ./.env
+RUN sed -i 's/DATABASE_URL=.*$/DATABASE_URL=mongodb:\/\/localhost:27017/' ./.env
+RUN sed -i 's/DATABASE_NAME=.*$/DATABASE_NAME=TopicstoreDB/' ./.env
+RUN sed -i 's/HOST=.*$/HOST=localhost/' ./.env
+RUN sed -i 's/PORT=.*$/PORT=5000/' ./.env
+
+# Stage 2: Build application using updated .env file
+FROM node:16
+
+COPY --from=0 /app/backend/.env ./.env
+WORKDIR /app/backend
+
+RUN npm install
+RUN npm run build
+
+# Stage 3: Run application
+FROM nginx:1.21
+
+COPY --from=1 /app/backend/. .
+EXPOSE 80
+
+CMD ["nginx", "-g", "daemon off;"]

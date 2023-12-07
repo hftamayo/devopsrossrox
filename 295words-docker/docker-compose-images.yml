@@ -1,0 +1,43 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: db
+    image: hftamayo/295words_db:stable-1.0.0
+    restart: unless-stopped
+    ports:
+      - "5433:5433"
+    networks:
+      - 295wordsnetwork
+
+  api:
+    container_name: 295wapi
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    image: hftamayo/295words_be:stable-1.0.0
+    env_file: ./.env
+    ports:
+      - $API_LOCAL_PORT:$API_DOCKER_PORT
+    environment:
+      PGHOST: $POSTGRES_HOST
+      PGPORT: $PG_DOCKER_PORT
+      PGUSER: $PG_USER
+      PGPASSWORD: $PG_PASSWORD
+    networks:
+      - 295wordsnetwork
+
+  web:
+    container_name: 295wfe
+    restart: unless-stopped
+    depends_on:
+      - api
+    image: hftamayo/295words_fe:stable-1.0.0
+    ports:
+      - "80:80"
+    networks:
+      - 295wordsnetwork
+      
+networks:
+  295wordsnetwork:

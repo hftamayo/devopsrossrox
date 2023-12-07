@@ -1,0 +1,12 @@
+#Data layer container
+#we can choose mongo:latest but take in count compatibility issues with RestAPI package's version
+FROM mongo:4.4
+
+MAINTAINER @heftamayo
+
+COPY db/mongo-initutf8.js /docker-entrypoint-initdb.d/
+
+EXPOSE 27017
+
+CMD ["mongod", "--bind_ip_all", "--port", "27017"]
+

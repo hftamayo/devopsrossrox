@@ -1,4 +1,5 @@
-bootcamp2023/desafios/desafiosbc2023/desafio01/script/token_discord
-bootcamp2023/vagrant/.vagrant/
-bootcamp2023/obsidiandevops/.obsidian/
-*.env*
+295words-docker/.env
+295words-docker/web/go.mod
+295topics-fullstack/backend/.env
+295topics-fullstack/backend/node_modules
+295topics-fullstack/backend/yarn.lock

@@ -1,0 +1,65 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: db
+    image: postgres:14.1-alpine
+    restart: on-failure
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_USER: $API_USER
+      POSTGRES_PASSWORD: $API_PASSWORD
+      POSTGRES_DB: $API_DATABASE
+      POSTGRES_HOST: $POSTGRES_HOST
+    ports:
+      - $PG_LOCAL_PORT:$PG_DOCKER_PORT
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - 295wordsdata:/var/lib/postgresql/data
+      - ./db/words.sql:/docker-entrypoint-initdb.d/init.sql
+    networks:
+      - 295wordsnetwork
+
+  api:
+    container_name: 295wapi
+    depends_on:
+      db:
+        condition: service_healthy
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: Dockerfile.java
+    env_file: ./.env
+    ports:
+      - $API_LOCAL_PORT:$API_DOCKER_PORT
+    environment:
+      PGHOST: $POSTGRES_HOST
+      PGPORT: $PG_DOCKER_PORT
+      PGUSER: $PG_USER
+      PGPASSWORD: $PG_PASSWORD
+    networks:
+      - 295wordsnetwork
+
+  web:
+    container_name: 295wfe
+    restart: unless-stopped
+    depends_on:
+      - api
+    build:
+      context: ./
+      dockerfile: Dockerfile.go
+    ports:
+      - "80:80"
+    networks:
+      - 295wordsnetwork
+
+volumes:
+  295wordsdata:
+
+networks:
+  295wordsnetwork:

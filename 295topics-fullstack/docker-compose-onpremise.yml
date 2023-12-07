@@ -1,0 +1,79 @@
+version: "3.8"
+
+services:
+  db:
+    container_name: mongodb
+    restart: always
+    build:
+      context: .
+      dockerfile: Dockerfile.mongo
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongodb_data:/data/db
+    #command: mongod --bind_ip_all
+    healthcheck:
+      test: ["CMD", "bash", "-c", "mongo --eval 'db.adminCommand(\"ping\")'"]
+      interval: 10s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    networks:
+      network:
+        ipv4_address: 192.168.20.7
+
+
+  mongo-express:
+    container_name: mongoadmin
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    image: mongo-express
+    ports:
+      - "8081:8081"
+    #env_file:
+    #  - ./.envmongoadmin
+    environment:
+      - ME_CONFIG_MONGODB_SERVER=mongodb
+      - ME_CONFIG_MONGODB_PORT=27017
+      - ME_CONFIG_MONGODB_URL= mongodb://mongodb:27017/
+    networks:
+      network:
+        ipv4_address: 192.168.20.8
+
+  backend:
+    container_name: 295fsbe
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    image: hftamayo/295fs_be:stable-1.0.0
+    ports:
+      - "5000:5000"
+    networks:
+      network:
+        ipv4_address: 192.168.20.9
+
+
+  frontend:
+    container_name: 295fsfe
+    restart: unless-stopped
+    depends_on:
+      - backend
+    image: hftamayo/295fs_fe:stable-1.0.0
+    ports:
+      - "3000:3000"
+    networks:
+      network:
+        ipv4_address: 192.168.20.10
+
+volumes:
+  mongodb_data:
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24
