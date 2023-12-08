@@ -20,8 +20,7 @@ services:
       timeout: 5s
       retries: 5
     volumes:
-      - 295wordsdata:/var/lib/postgresql/data
-      - ./db/words.sql:/docker-entrypoint-initdb.d/init.sql
+      - ./data/pgdata:/var/lib/postgresql/data
     networks:
       - 295wordsnetwork
 
