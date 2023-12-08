@@ -40,7 +40,7 @@ mv db/temp_sql db/words.sql
 echo "postgres script updated"
 
 #creating a golang's mod file
-cd frontend/
+cd web/
 go mod init
 cd ..
 
