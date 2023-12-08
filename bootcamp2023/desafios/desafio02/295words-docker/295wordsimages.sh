@@ -28,7 +28,7 @@ fi
 
 #STAGE 2: updates to the original codebase
 
-cd 295words-docker
+cd bootcamp2023/desafios/desafio02/295words-docker
 #updating db's seeding data
 #TODO: this routine should be a transaction
 original_sql="db/words.sql"
