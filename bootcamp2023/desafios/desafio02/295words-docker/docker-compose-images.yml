@@ -5,8 +5,22 @@ services:
     container_name: db
     image: hftamayo/295words_db:stable-1.0.0
     restart: unless-stopped
+    env_file:
+      - ./.env
+    environment:
+      POSTGRES_USER: $API_USER
+      POSTGRES_PASSWORD: $API_PASSWORD
+      POSTGRES_DB: $API_DATABASE
+      POSTGRES_HOST: $POSTGRES_HOST
     ports:
-      - "5433:5433"
+      - $PG_LOCAL_PORT:$PG_DOCKER_PORT
+    healthcheck:
+      test: ["CMD-SHELL", "sh -c 'pg_isready -U $${POSTGRES_USER} -d $${POSTGRES_DB}'"]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+    volumes:
+      - ./data/pgdata:/var/lib/postgresql/data
     networks:
       - 295wordsnetwork
 
