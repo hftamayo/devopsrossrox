@@ -44,6 +44,21 @@ cd frontend/
 go mod init
 cd ..
 
+#creating .env file
+cp env.example .env
+sed -i 's/API_USER=.*$/API_USER=postgres/' ./.env
+sed -i 's/API_PASSWORD=.*$/API_PASSWORD=postgres/' ./.env
+sed -i 's/API_DATABASE=.*$/API_DATABASE=postgres/' ./.env
+sed -i 's/API_HOST=.*$/API_HOST=295wapi/' ./.env
+sed -i 's/API_LOCAL_PORT=.*$/API_LOCAL_PORT=8080/' ./.env
+sed -i 's/API_DOCKER_PORT=.*$/API_DOCKER_PORT=8080/' ./.env
+sed -i 's/POSTGRES_HOST=.*$/POSTGRES_HOST=db/' ./.env
+sed -i 's/PG_LOCAL_PORT=.*$/PG_LOCAL_PORT=5432/' ./.env
+sed -i 's/PG_DOCKER_PORT=.*$/PG_DOCKER_PORT=5432/' ./.env
+sed -i 's/PG_USER=.*$/PG_USER=admin/' ./.env
+sed -i 's/PG_PASSWORD=.*$/PG_PASSWORD=devops/' ./.env
+
+
 #STAGE #: docker images build and push
 docker build -t 295words_be:stable-1.0.0 -f Dockerfile.java .
 sleep 5
