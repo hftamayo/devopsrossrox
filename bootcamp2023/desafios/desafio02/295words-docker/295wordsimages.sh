@@ -4,7 +4,7 @@
 BC_PROJECT="295words"
 HOME_PROJECT="desafio02"
 GH_REPO="https://github.com/hftamayo/devopsrossrox.git"
-BRANCH_REPO="grial01"
+BRANCH_REPO="grialrevamp"
 
 #STAGE 1: install/update codebase
 cd $HOME
