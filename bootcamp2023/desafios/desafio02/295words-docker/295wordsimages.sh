@@ -41,7 +41,7 @@ echo "postgres script updated"
 
 #creating a golang's mod file
 cd web/
-go mod init
+go mod init github.com/hftamayo/devopsrossrox
 cd ..
 
 #creating .env file
