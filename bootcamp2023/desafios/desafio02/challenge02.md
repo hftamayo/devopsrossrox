@@ -16,7 +16,7 @@ each application is the next:
 - Backend: Express + Typescript.
 - Frontend: Node.JS + EJS Template.
 - Mongo-Express: Tool for MongoDB Administration (similar to phpmyadmin / pgadmin.)
-- On premise deployment each of the above layer belongs to a separate container. The automation script 
+- On premise deployment: each of the above layer belongs to a separate container. The automation script 
 requires two variables (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD), they may be created in bash environment.
 - On cloud: The first three containers will be deployed on Google Cloud Platform.
 
@@ -24,15 +24,22 @@ requires two variables (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD), they may b
 - Data Layer:
 - Backend: 
 - Frontend: 
-- On premise deployment 
+- On premise deployment: 
 - On cloud: 
 
-## 2. Project 1: 295topics-fullstack ##
+## 2. Solution for 295topics-fullstack ##
 
 ### 2.1 Requirements ###
 [requirements in spanish](./295topics-fullstack/enunciadosp.md)
 
-### 2.2 Walkthrough ###
+### 2.2 Demo: Building and Deploy  On Premise ###
+* [Building Docker Images](https://youtu.be/_sz10Cn91fY)
+* [Deploying on Premise](https://youtu.be/sPlM_nePAOY)
+
+### 2.3 Demo On Cloud ###
+* []()
+
+### 2.4 Walkthrough ###
 * [Planning]()
 * [Database]()
 * [Backend]() 
@@ -40,34 +47,26 @@ requires two variables (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD), they may b
 * [Automation on premise]()
 * [Automation on cloud]()
 
-### 2.3 Demo On Premise ###
-* []()
-* ![PR001]()
-
-### 2.4 Demo On Cloud ###
-* []()
-* ![PR001]()
 
 ## 3. Project 2: 295 Words ##
 
 ### 3.1 Requirements ###
 [requirements in spanish](./295topics-fullstack/enunciadosp.md)
 
-### 3.2 Walkthrough ###
+### 3.2 Demo: Building and Deploy  On Premise ###
+* [Building Docker Images](https://youtu.be/_sz10Cn91fY)
+* [Deploying on Premise](https://youtu.be/sPlM_nePAOY)
+
+### 3.3 Demo On Cloud ###
+* []()
+
+### 3.4 Walkthrough ###
 * [Planning]()
 * [Database]()
 * [Backend]() 
 * [Frontend]()
 * [Automation on premise]()
 * [Automation on cloud]()
-
-### 3.3 Demo On Premise ###
-* []()
-* ![PR001]()
-
-### 3.4 Demo On Cloud ###
-* []()
-* ![PR001]()
 
 ## 4. References ##
 ### Exercise 1: MongoDB+TS+Node ###
