@@ -54,8 +54,8 @@ requires two variables (DOCKER_HUB_USERNAME and DOCKER_HUB_PASSWORD), they may b
 [requirements in spanish](./295topics-fullstack/enunciadosp.md)
 
 ### 3.2 Demo: Building and Deploy  On Premise ###
-* [Building Docker Images](https://youtu.be/_sz10Cn91fY)
-* [Deploying on Premise](https://youtu.be/sPlM_nePAOY)
+* [Building Docker Images](https://youtu.be/XAV6bYXkORo)
+* [Deploying on Premise](https://youtu.be/0opDFMnF1O0)
 
 ### 3.3 Demo On Cloud ###
 * []()
