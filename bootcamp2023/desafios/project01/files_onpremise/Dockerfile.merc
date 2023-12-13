@@ -1,0 +1,17 @@
+FROM node:18-alpine AS builder
+
+WORKDIR /295shoponline
+
+COPY ./devopsbc_p1_be_merchandise/*.json  ./
+
+RUN apk add yarn
+RUN apk add bash
+RUN apk add curl
+
+RUN yarn install --frozen-lockfile
+
+COPY ./devopsbc_p1_be_merchandise/. .
+
+EXPOSE 3003
+
+CMD ["node", "server.js"]

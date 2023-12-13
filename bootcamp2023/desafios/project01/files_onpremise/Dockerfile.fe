@@ -1,0 +1,27 @@
+FROM node:18-alpine AS builder
+
+WORKDIR /295shoponline
+
+COPY ./devopsbc_p1_fe/*.json  ./
+
+RUN apk add yarn
+RUN apk add bash
+RUN apk add curl
+
+RUN yarn install --frozen-lockfile
+
+COPY ./devopsbc_p1_fe/. .
+
+RUN yarn add dotenv
+
+COPY ./devopsbc_p1_fe/env.template ./.env
+RUN sed -i 's/PRODUCTS_SERVICE=.*$/PRODUCTS_SERVICE=eshopproducts/' ./.env
+RUN sed -i 's/SHOPPING_CART_SERVICE=.*$/SHOPPING_CART_SERVICE=eshopscart/' ./.env
+RUN sed -i 's/MERCHANDISE_SERVICE=.*$/MERCHANDISE_SERVICE=eshopmerc/' ./.env
+
+#adding a script for loading env with Typescript
+RUN sed -i '/"scripts": {/a\    "start:with-env": "node -r dotenv/config server.js",' package.json
+
+EXPOSE 3000
+
+CMD ["yarn", "run", "start:with-env"]

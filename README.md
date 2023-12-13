@@ -12,4 +12,4 @@ links for more details:
 
 - [challenge 01](./bootcamp2023/desafios/desafio01/challenge01.md)
 - [challenge 02](./bootcamp2023/desafios/desafio02/challenge02.md)
-
+- [project01: deploy of onlineshop on GCP in manual mode](./bootcamp2023/desafios/project01/gcp_gke_manual.md)

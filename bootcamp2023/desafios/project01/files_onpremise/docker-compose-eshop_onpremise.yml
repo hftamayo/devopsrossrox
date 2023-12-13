@@ -1,0 +1,57 @@
+version: "3.8"
+
+services:
+  bemerc:
+    container_name: eshopmerc
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: ./devopsbc_p1_be_merchandise/Dockerfile.merc
+    ports:
+      - "3003:3003"
+    networks:
+      network:
+        ipv4_address: 192.168.20.11
+
+  beproducts:
+    container_name: eshopproducts
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: ./devopsbc_p1_be_products/Dockerfile.products
+    ports:
+      - "3001:3001"
+    networks:
+      network:
+        ipv4_address: 192.168.20.12
+
+  bescart:
+    container_name: eshopscart
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: ./devopsbc_p1_be_scart/Dockerfile.scart
+    ports:
+      - "3002:3002"
+    networks:
+      network:
+        ipv4_address: 192.168.20.13
+
+  frontend:
+    container_name: eshopfe
+    restart: unless-stopped
+    build:
+      context: ./
+      dockerfile: ./devopsbc_p1_fe/Dockerfile.fe
+    ports:
+      - "3000:3000"
+    networks:
+      network:
+        ipv4_address: 192.168.20.14
+
+networks:
+  network:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 192.168.20.0/24
