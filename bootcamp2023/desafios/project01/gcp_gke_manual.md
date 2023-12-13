@@ -1,10 +1,10 @@
 1. Setting up the PROJECT_ID variable for use it in the Google Cloud CLI and creating the repository:
 
-![[./img/Pasted image 20231212103846.png]]
+![[img/Pasted image 20231212103846.png]]
 
 2. Verifing if the Repository was created
 
-![[./img/Pasted image 20231212104048.png]]
+![[img/Pasted image 20231212104048.png]]
 
 3. Cloning the github's repository into my GCP project's repository (backend microservices)
 
