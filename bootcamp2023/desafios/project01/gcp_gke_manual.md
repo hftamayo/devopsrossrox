@@ -113,6 +113,6 @@ In my Dockerfile I set:
 
 22. Verifying if the data is available:
 
-![[./img/Pasted image 20231213090149.png]]
+![[./bootcamp2023/desafios/project01/img/Pasted image 20231213090149.png]]
 
-![[./img/Pasted image 20231213090213.png]]
+![[./bootcamp2023/desafios/project01/img/Pasted image 20231213090213.png]]
