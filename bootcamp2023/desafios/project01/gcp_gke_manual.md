@@ -1,3 +1,10 @@
+## Diagram of the Solution ##
+
+![architecture_diagram](./img/gcp_manual.drawio.png)
+
+## Steps to reproduce the deployment process ##
+
+
 1. Setting up the PROJECT_ID variable for use it in the Google Cloud CLI and creating the repository:
 
 ![01](./img/01.png)
